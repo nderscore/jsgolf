@@ -1,0 +1,12 @@
+dist/
+node_modules/
+
+*.log
+yarn-debug.log*
+yarn-error.log*
+
+.env*
+docker-compose.yml
+
+.DS_Store
+Thumbs.db

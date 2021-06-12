@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Challenge" ALTER COLUMN "testCode" SET NOT NULL,
+ALTER COLUMN "testCode" SET DATA TYPE TEXT;

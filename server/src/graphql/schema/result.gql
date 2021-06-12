@@ -1,0 +1,9 @@
+type Result {
+  success: Boolean!
+  errors: [String]
+}
+
+type CreateSolutionResult {
+  solution: Solution
+  result: Result!
+}

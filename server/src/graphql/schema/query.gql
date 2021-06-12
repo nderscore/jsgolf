@@ -1,0 +1,7 @@
+type Query {
+  getUser(id: ID!): User
+
+  getChallenge(id: ID!): Challenge
+  getChallenges: [Challenge]!
+  getProposedChallenges: [Challenge]!
+}

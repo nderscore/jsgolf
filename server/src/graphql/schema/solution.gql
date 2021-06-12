@@ -1,0 +1,9 @@
+type Solution {
+  authorId: ID!
+  author: User!
+  timestamp: Date!
+  size: Int!
+  code: String
+  challengeId: ID!
+  challenge: Challenge!
+}

@@ -1,0 +1,30 @@
+enum ChallengeStatus {
+  DRAFT
+  PROPOSED
+  PUBLISHED
+  REJECTED
+  DELETED
+}
+
+type Challenge {
+  id: ID!
+  created: Date!
+  published: Date
+  title: String!
+  description: String!
+  author: User!
+  authorId: ID!
+  status: ChallengeStatus!
+  setupCode: String!
+  testCode: String!
+  tags: [String]!
+  solutions: [Solution]!
+  upvotes: Int
+  downvotes: Int
+  rejectionReason: String
+}
+
+type CreateChallengeResult {
+  challenge: Challenge
+  result: Result!
+}

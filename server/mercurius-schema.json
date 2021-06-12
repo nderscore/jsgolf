@@ -1,0 +1,9 @@
+[
+  "enum ChallengeStatus {\n  DRAFT\n  PROPOSED\n  PUBLISHED\n  REJECTED\n  DELETED\n}\n\ntype Challenge {\n  id: ID!\n  created: Date!\n  published: Date\n  title: String!\n  description: String!\n  author: User!\n  authorId: ID!\n  status: ChallengeStatus!\n  setupCode: String!\n  testCode: String!\n  tags: [String]!\n  solutions: [Solution]!\n  upvotes: Int\n  downvotes: Int\n  rejectionReason: String\n}\n\ntype CreateChallengeResult {\n  challenge: Challenge\n  result: Result!\n}",
+  "type Mutation {\n  createChallenge(\n    title: String!,\n    description: String!,\n    tags: [String],\n    setupCode: String!,\n    testCode: String!,\n    referenceSolution: String!\n  ): CreateChallengeResult!\n\n  testChallenge(setupCode: String!, testCode: String!, solution: String!): Result!\n\n  createSolution(challenge: ID!, solution: String!): CreateSolutionResult!\n\n  testSolution(challenge: ID!, solution: String!): Result!\n\n  upvote(challenge: ID!): Boolean!\n\n  downvote(challenge: ID!, reason: String): Boolean!\n}",
+  "type Query {\n  getUser(id: ID!): User\n\n  getChallenge(id: ID!): Challenge\n  getChallenges: [Challenge]!\n  getProposedChallenges: [Challenge]!\n}",
+  "type Result {\n  success: Boolean!\n  errors: [String]\n}\n\ntype CreateSolutionResult {\n  solution: Solution\n  result: Result!\n}",
+  "scalar Date",
+  "type Solution {\n  authorId: ID!\n  author: User!\n  timestamp: Date!\n  size: Int!\n  code: String\n  challengeId: ID!\n  challenge: Challenge!\n}",
+  "type User {\n  id: ID!\n  githubId: Int!\n  name: String!\n  challenges: [Challenge]\n  solutions: [Solution]\n}"
+]

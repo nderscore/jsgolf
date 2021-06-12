@@ -1,0 +1,7 @@
+type User {
+  id: ID!
+  githubId: Int!
+  name: String!
+  challenges: [Challenge]
+  solutions: [Solution]
+}

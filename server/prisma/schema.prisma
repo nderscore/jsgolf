@@ -1,0 +1,79 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("JSGOLF_SERVER_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  CREATOR
+  PUBLISHER
+  MODERATOR
+  ADMINISTRATOR
+}
+
+model User {
+  id         String      @id @default(uuid())
+  githubId   Int         @unique
+  username   String
+  disabled   Boolean     @default(false)
+  roles      Role[]
+  challenges Challenge[]
+  solutions  Solution[]
+  votes      Vote[]
+}
+
+enum ChallengeStatus {
+  DRAFT
+  PROPOSED
+  PUBLISHED
+  REJECTED
+  DELETED
+}
+
+model Challenge {
+  id              String          @id @default(uuid())
+  title           String
+  created         DateTime        @default(now())
+  published       DateTime?
+  author          User            @relation(fields: [authorId], references: [id])
+  authorId        String
+  description     String
+  tags            String[]
+  setupCode       String
+  testCode        String
+  status          ChallengeStatus
+  solutions       Solution[]
+  votes           Vote[]
+  rejectionReason String?
+}
+
+model Solution {
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  timestamp   DateTime  @updatedAt
+  code        String
+  size        Int
+
+  @@unique([challengeId, authorId])
+}
+
+enum VoteValue {
+  UP
+  DOWN
+}
+
+model Vote {
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  value       VoteValue
+  reason      String?
+
+  @@unique([challengeId, userId])
+}
