@@ -65,7 +65,13 @@ export const execute = async (
       .run(context, {
         timeout: config.WORKER_TIMEOUT,
       })
-      .catch(e => resolve(e));
+      .catch(e => {
+        if (typeof e !== 'object') {
+          resolve(new Error(e));
+        } else {
+          resolve(e);
+        }
+      });
   });
 
   script.release();

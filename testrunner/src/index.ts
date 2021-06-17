@@ -50,7 +50,7 @@ wss.on('connection', (ws: WebSocket & AliveFlagged, request) => {
     ws.send(
       JSON.stringify({
         id,
-        result: result === true ? true : result.message,
+        result: result === true ? true : String(result.message),
       }),
       e => void e,
     );
