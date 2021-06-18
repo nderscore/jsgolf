@@ -4,7 +4,7 @@ import mercuriusCodegen, { loadSchemaFiles } from 'mercurius-codegen';
 import { buildSchema } from 'graphql';
 import { config } from '../constants/config';
 import path from 'path';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../prisma';
 import { Query } from '../query';
 import { Mutation } from '../mutation';
 import { loaders } from '../loaders';
@@ -12,8 +12,6 @@ import { loaders } from '../loaders';
 import { runTest } from '../testRunnerClient';
 
 const BASE_PATH = path.resolve(__dirname, '../graphql');
-
-const prisma = new PrismaClient();
 
 const buildContext = async (request: FastifyRequest, _reply: FastifyReply) => {
   return {
