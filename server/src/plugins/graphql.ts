@@ -1,21 +1,39 @@
+import type { Session } from '@mgcrea/fastify-session';
 import { FastifyReply, FastifyRequest, FastifyInstance } from 'fastify';
 import mercurius from 'mercurius';
 import mercuriusCodegen, { loadSchemaFiles } from 'mercurius-codegen';
 import { buildSchema } from 'graphql';
-import { config } from '../constants/config';
 import path from 'path';
-import { prisma } from '../prisma';
+
+import { config } from '../constants/config';
+import { prisma } from '../lib/prisma';
 import { Query } from '../query';
 import { Mutation } from '../mutation';
 import { loaders } from '../loaders';
-
-import { runTest } from '../testRunnerClient';
+import { runTest } from '../lib/testRunnerClient';
 
 const BASE_PATH = path.resolve(__dirname, '../graphql');
 
 const buildContext = async (request: FastifyRequest, _reply: FastifyReply) => {
+  let auth;
+  const session = request?.session as Session;
+  const userId = String(session?.get?.('userId') ?? '');
+console.log('context userId', userId);
+  if (userId) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    console.log('found user', user);
+    if (user && !user.disabled) {
+      auth = {
+        userId,
+        roles: user.roles,
+      };
+    }
+  }
+
   return {
-    authorization: request.headers.authorization,
+    auth,
     prisma,
     runTest,
   };

@@ -115,6 +115,7 @@ export type MutationdownvoteArgs = {
 export type Query = {
   __typename?: 'Query';
   getUser?: Maybe<User>;
+  getOwnUser?: Maybe<User>;
   getChallenge?: Maybe<Challenge>;
   getChallenges: Array<Maybe<Challenge>>;
   getProposedChallenges: Array<Maybe<Challenge>>;
@@ -407,6 +408,7 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QuerygetUserArgs, 'id'>
   >;
+  getOwnUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getChallenge?: Resolver<
     Maybe<ResolversTypes['Challenge']>,
     ParentType,

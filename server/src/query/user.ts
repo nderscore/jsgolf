@@ -14,4 +14,20 @@ export const user: IResolvers['Query'] & QueryResolvers = {
 
     return toGQLUser(result);
   },
+
+  async getOwnUser(_root, _args, { auth, prisma }, _info) {
+    if (!auth) {
+      throw new Error('Not logged in.');
+    }
+
+    const result = await prisma.user.findUnique({
+      where: { id: auth?.userId },
+    });
+
+    if (!result || result.disabled) {
+      throw new Error('User not found');
+    }
+
+    return toGQLUser(result);
+  },
 };

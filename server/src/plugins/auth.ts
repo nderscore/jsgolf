@@ -2,11 +2,11 @@ import type { FastifyInstance } from 'fastify';
 import oauthPlugin, { OAuth2Namespace } from 'fastify-oauth2';
 import fastifyCookie from 'fastify-cookie';
 import fastifySession from '@mgcrea/fastify-session';
-import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import fetch from 'node-fetch';
 
 import { config } from '../constants/config';
-import { prisma } from '../prisma';
+import { prisma } from '../lib/prisma';
+import { PrismaSessionStore } from '../lib/PrismaSessionStore';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -14,15 +14,17 @@ declare module 'fastify' {
   }
 }
 
+declare module '@mgcrea/fastify-session' {
+  interface SessionData {
+    userId: string;
+  }
+}
+
 const startRedirectPath = '/login/github';
 const callbackPath = `${startRedirectPath}/callback`;
 const logoutPath = '/logout';
 
-const sessionStore = new PrismaSessionStore(prisma, {
-  checkPeriod: 2 * 60e3,
-  dbRecordIdIsSessionId: true,
-  dbRecordIdFunction: undefined,
-});
+const sessionStore = new PrismaSessionStore({ prisma });
 
 export const setupAuth = (app: FastifyInstance) => {
   app.register(fastifyCookie);
@@ -31,8 +33,10 @@ export const setupAuth = (app: FastifyInstance) => {
     secret: config.SESSION_SECRET,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     store: sessionStore as any,
+    saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: false, // FIXME: set secure here in prod?
+      maxAge: 14 * 24 * 60 * 60e3, // 14 days
     },
   });
 

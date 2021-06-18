@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 
-import { config } from './constants/config';
+import { config } from '../constants/config';
 
 type Callback = (value: true | string) => void;
 
