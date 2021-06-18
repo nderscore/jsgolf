@@ -15,12 +15,9 @@ const offlineMessage = 'Error: Test Runner Offline';
 const callbacks: Record<string, Callback> = {};
 
 let client: WebSocket | undefined;
-let connected = false;
 
 const reconnect = () => {
-  if (connected && client) {
-    client.terminate();
-  }
+  client?.terminate?.();
   client = undefined;
   Object.entries(callbacks).forEach(([id, callback]) => {
     callback(offlineMessage);
@@ -33,7 +30,10 @@ const connect = () => {
   let timeout: NodeJS.Timeout;
   const heartbeat = () => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => client?.close(), 90e3);
+    timeout = setTimeout(() => {
+      console.error('TestRunner Websocket timed out.');
+      client?.close();
+    }, 90e3);
   };
 
   client = new WebSocket(config.TESTRUNNER_URL, {
@@ -44,11 +44,12 @@ const connect = () => {
 
   client.on('open', () => {
     console.log('TestRunner Websocket connected.');
-    connected = true;
     heartbeat();
   });
 
-  client.on('ping', heartbeat);
+  client.on('ping', () => {
+    heartbeat();
+  });
 
   client.on('error', e => {
     console.error('TestRunner Websocket error', e);
@@ -56,11 +57,13 @@ const connect = () => {
 
   client.on('close', () => {
     console.log('TestRunner Websocket disconnected.');
-    connected = false;
+    clearTimeout(timeout);
     reconnect();
   });
 
   client.on('message', data => {
+    heartbeat();
+
     let testResult;
     try {
       testResult = JSON.parse(data.toString()) as TestResult;
@@ -88,7 +91,7 @@ export const runTest = (
   solution: string,
 ): Promise<true | string> =>
   new Promise(resolve => {
-    if (!connected || !client) {
+    if (!client) {
       return resolve(offlineMessage);
     }
 

@@ -23,7 +23,7 @@ type AliveFlagged = {
 };
 
 wss.on('connection', (ws: WebSocket & AliveFlagged, request) => {
-  console.log(`Received WS connection from ${request.socket.remoteAddress}`);
+  console.log(`Received connection from ${request.socket.remoteAddress}`);
 
   ws._alive = true;
 
@@ -56,7 +56,7 @@ wss.on('connection', (ws: WebSocket & AliveFlagged, request) => {
     );
   });
 
-  ws.on('pong', (ws: WebSocket & AliveFlagged) => {
+  ws.on('pong', () => {
     ws._alive = true;
   });
 
