@@ -9,6 +9,7 @@
 
   jail.eval = eval;
   const globalScopeEval = code => (0, jail.eval)(code);
+  const globalScopeEvalClosure = code => globalScopeEval(`(()=>{${code}})()`);
 
   const references = {};
   const testFns = externalFns.reduce(
@@ -25,7 +26,7 @@
     references[key] = val;
   };
 
-  globalScopeEval(/*--SETUP--*/);
+  globalScopeEvalClosure(/*--SETUP--*/);
 
   delete global.saveReference;
 

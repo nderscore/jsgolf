@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const serialize = (value: any) => {
+export const serialize = (value: unknown) => {
   try {
     return JSON.stringify(value, null, '\t');
   } catch (e) {

@@ -4,8 +4,7 @@ import { config } from './config';
 import { renderTemplate } from './renderTemplate';
 import { testEqual, testDeepEqual } from './testFns';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type JailFns = Record<string, (...args: any[]) => void>;
+type JailFns = Record<string, (...args: unknown[]) => void>;
 
 export const execute = async (
   setup: string,
@@ -19,40 +18,29 @@ export const execute = async (
 
   jail.setSync('global', jail.derefInto());
 
-  jail.setSync('_ivm', ivm);
-
-  const setupJailedFns = (jailFns: JailFns) => {
-    const entries = Object.entries(jailFns);
-
-    entries.forEach(([name, fn]) => {
-      jail.setSync(`_${name}`, new ivm.Reference(fn));
-    });
-
-    return Promise.all(
-      entries.map(([name]) =>
-        context.evalClosure(
-          `
-            const ivm = global._ivm;
-            const ref = global._${name};
-            global.${name} = (...args) =>
-              ref.applySync(
-                undefined,
-                args.map(arg => new ivm.ExternalCopy(arg).copyInto()),
-                { arguments: { copy: true } }
-              );
-            delete global._${name};
-          `,
-        ),
-      ),
-    );
-  };
-
-  await setupJailedFns({
+  const jailFns: JailFns = {
     testEqual,
     testDeepEqual,
-  });
+  };
 
-  await context.evalClosure(`delete global._ivm;`);
+  await Promise.all(
+    Object.entries(jailFns).map(([name, fn]) =>
+      context.evalClosure(
+        `
+          const ref = $0;
+          global.${name} = (...args) => {
+            ref.applySync(
+              undefined,
+              args,
+              { arguments: { copy: true } }
+            );
+          };
+        `,
+        [(...args: unknown[]) => fn(...args)],
+        { arguments: { reference: true } },
+      ),
+    ),
+  );
 
   const script = await isolate.compileScript(
     renderTemplate(setup, test, solution),
@@ -66,10 +54,10 @@ export const execute = async (
         timeout: config.WORKER_TIMEOUT,
       })
       .catch(e => {
-        if (typeof e !== 'object') {
-          resolve(new Error(e));
-        } else {
+        if (e instanceof Error) {
           resolve(e);
+        } else {
+          resolve(new Error(e));
         }
       });
   });

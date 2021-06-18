@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import isEqual from 'lodash/isEqual';
 
 import { serialize } from './util';
 
-export const testEqual = (expected: any, result: any, given: any) => {
+export const testEqual = (
+  expected: unknown,
+  result: unknown,
+  given: unknown,
+) => {
   if (expected !== result) {
     throw new Error(
       `${
@@ -16,7 +18,11 @@ export const testEqual = (expected: any, result: any, given: any) => {
   }
 };
 
-export const testDeepEqual = (expected: any, result: any, given: any) => {
+export const testDeepEqual = (
+  expected: unknown,
+  result: unknown,
+  given: unknown,
+) => {
   if (!isEqual(expected, result)) {
     throw new Error(
       `${
