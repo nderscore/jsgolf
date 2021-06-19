@@ -9,7 +9,18 @@
 
   jail.eval = eval;
   const globalScopeEval = code => (0, jail.eval)(code);
-  const globalScopeEvalClosure = code => globalScopeEval(`(()=>{${code}})()`);
+  const gseSetup = code =>
+    globalScopeEval(`
+      async ({ saveReference })=>{${code}}
+    `);
+  const gseTest = code =>
+    globalScopeEval(`
+      async (solution, {
+        loadReference,
+        testEqual,
+        testDeepEqual,
+      })=>{${code}}
+    `);
 
   const references = {};
   const testFns = externalFns.reduce(
@@ -22,17 +33,17 @@
     },
   );
 
-  global.saveReference = (key, val) => {
-    references[key] = val;
-  };
-
-  globalScopeEvalClosure(/*--SETUP--*/);
+  gseSetup(/*--SETUP--*/)({
+    saveReference: (key, val) => {
+      references[key] = val;
+    },
+  });
 
   delete global.saveReference;
 
   const solution = globalScopeEval(/*--SOLUTION--*/);
 
-  await globalScopeEval(/*--TEST--*/)(solution, testFns);
+  await gseTest(/*--TEST--*/)(solution, testFns);
 
   jail._finished();
 })();
