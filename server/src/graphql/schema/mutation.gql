@@ -12,7 +12,7 @@ type Mutation {
 
   createSolution(challenge: ID!, solution: String!): CreateSolutionResult! @auth
 
-  testSolution(challenge: ID!, solution: String!): Result!
+  testSolution(challenge: ID!, solution: String!): Result! @auth
 
   upvote(challenge: ID!): Boolean! @auth(role: CREATOR)
 
