@@ -10,7 +10,11 @@ type TestResult = {
   result: true | string;
 };
 
+const MAX_CALLBACKS = 50;
+
 const offlineMessage = 'Error: Test Runner Offline';
+
+const overloadedMessage = 'Error: Test Runner Overloaded';
 
 const callbacks: Map<string, Callback> = new Map();
 
@@ -93,6 +97,10 @@ export const runTest = (
   new Promise(resolve => {
     if (!client) {
       return resolve(offlineMessage);
+    }
+
+    if (callbacks.size >= MAX_CALLBACKS) {
+      return resolve(overloadedMessage);
     }
 
     const id = uuidv4();
