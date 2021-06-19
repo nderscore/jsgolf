@@ -6,15 +6,15 @@ type Mutation {
     setupCode: String!,
     testCode: String!,
     referenceSolution: String!
-  ): CreateChallengeResult!
+  ): CreateChallengeResult! @auth(role: CREATOR)
 
-  testChallenge(setupCode: String!, testCode: String!, solution: String!): Result!
+  testChallenge(setupCode: String!, testCode: String!, solution: String!): Result! @auth(role: CREATOR)
 
-  createSolution(challenge: ID!, solution: String!): CreateSolutionResult!
+  createSolution(challenge: ID!, solution: String!): CreateSolutionResult! @auth
 
   testSolution(challenge: ID!, solution: String!): Result!
 
-  upvote(challenge: ID!): Boolean!
+  upvote(challenge: ID!): Boolean! @auth(role: CREATOR)
 
-  downvote(challenge: ID!, reason: String): Boolean!
+  downvote(challenge: ID!, reason: String): Boolean! @auth(role: CREATOR)
 }

@@ -1,6 +1,6 @@
 type Query {
   getUser(id: ID!): User
-  getOwnUser: User
+  getOwnUser: User @auth(role: USER)
 
   getChallenge(id: ID!): Challenge
   getChallenges: [Challenge]!

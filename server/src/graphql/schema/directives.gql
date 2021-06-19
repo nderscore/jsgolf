@@ -1,0 +1,11 @@
+enum Role {
+  USER
+  CREATOR
+  PUBLISHER
+  MODERATOR
+  ADMINISTRATOR
+}
+
+directive @auth(
+  role: Role = USER,
+) on OBJECT | FIELD_DEFINITION

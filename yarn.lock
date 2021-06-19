@@ -2624,6 +2624,15 @@ meow@^3.3.0:
     redent "^1.0.0"
     trim-newlines "^1.0.0"
 
+mercurius-auth@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mercurius-auth/-/mercurius-auth-1.1.0.tgz#ee383b1702fff5775c26df2a8d30622c3b4ab241"
+  integrity sha512-tmedHDUMWswg53NN8YzeFfueU8QgUmn3i5kV9qFRf+l53GCEW6pW3+y8WXJw79SWoWL4W1S5tuKzYVrCbYZNfw==
+  dependencies:
+    fastify-error "^0.3.0"
+    fastify-plugin "^3.0.0"
+    graphql "^15.4.0"
+
 mercurius-codegen@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/mercurius-codegen/-/mercurius-codegen-1.6.1.tgz#94c7e45b802e41e22349fd008077c3f4bd637184"

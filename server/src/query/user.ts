@@ -21,7 +21,7 @@ export const user: IResolvers['Query'] & QueryResolvers = {
     }
 
     const result = await prisma.user.findUnique({
-      where: { id: auth?.userId },
+      where: { id: auth.userId },
     });
 
     if (!result || result.disabled) {

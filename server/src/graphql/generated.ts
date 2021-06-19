@@ -68,6 +68,14 @@ export type CreateChallengeResult = {
   result: Result;
 };
 
+export enum Role {
+  USER = 'USER',
+  CREATOR = 'CREATOR',
+  PUBLISHER = 'PUBLISHER',
+  MODERATOR = 'MODERATOR',
+  ADMINISTRATOR = 'ADMINISTRATOR',
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   createChallenge: CreateChallengeResult;
@@ -276,6 +284,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   CreateChallengeResult: ResolverTypeWrapper<CreateChallengeResult>;
+  Role: Role;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
@@ -302,6 +311,15 @@ export type ResolversParentTypes = {
   Solution: Solution;
   User: User;
 };
+
+export type authDirectiveArgs = { role?: Maybe<Role> };
+
+export type authDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = MercuriusContext,
+  Args = authDirectiveArgs,
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type ChallengeResolvers<
   ContextType = MercuriusContext,
@@ -509,6 +527,16 @@ export type Resolvers<ContextType = MercuriusContext> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = MercuriusContext> = Resolvers<ContextType>;
+export type DirectiveResolvers<ContextType = MercuriusContext> = {
+  auth?: authDirectiveResolver<any, any, ContextType>;
+};
+
+/**
+ * @deprecated
+ * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
+ */
+export type IDirectiveResolvers<ContextType = MercuriusContext> =
+  DirectiveResolvers<ContextType>;
 
 type Loader<TReturn, TObj, TParams, TContext> = (
   queries: Array<{

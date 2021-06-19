@@ -1,6 +1,7 @@
 import type { Session } from '@mgcrea/fastify-session';
 import { FastifyReply, FastifyRequest, FastifyInstance } from 'fastify';
 import mercurius from 'mercurius';
+import mercuriusAuth from 'mercurius-auth';
 import mercuriusCodegen, { loadSchemaFiles } from 'mercurius-codegen';
 import { buildSchema } from 'graphql';
 import path from 'path';
@@ -73,6 +74,19 @@ export const setupGraphQL = (app: FastifyInstance) => {
     resolvers,
     loaders,
     context: buildContext,
+  });
+
+  app.register(mercuriusAuth, {
+    async applyPolicy(authDirective, _parent, _args, { auth }, _info) {
+      const role =
+        (authDirective.arguments?.[0]?.value as { value: string })?.value ??
+        'USER';
+
+      const roles = auth ? ['USER', ...auth.roles] : [];
+
+      return roles.includes(role);
+    },
+    authDirective: 'auth',
   });
 
   mercuriusCodegen(app, {
