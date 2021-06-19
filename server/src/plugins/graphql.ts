@@ -18,12 +18,12 @@ const buildContext = async (request: FastifyRequest, _reply: FastifyReply) => {
   let auth;
   const session = request?.session as Session;
   const userId = String(session?.get?.('userId') ?? '');
-console.log('context userId', userId);
+
   if (userId) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
     });
-    console.log('found user', user);
+
     if (user && !user.disabled) {
       auth = {
         userId,
