@@ -1,6 +1,6 @@
 # 🏌️‍♀️ JS Golf 🏌️‍♂️
 
-Source code for jsgolf.club, a Javascript code golf competition website.
+Source code for js.golf, a Javascript code golf competition website.
 
 ## Requirements
 
