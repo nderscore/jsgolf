@@ -12,16 +12,16 @@ type TestResult = {
 
 const offlineMessage = 'Error: Test Runner Offline';
 
-const callbacks: Record<string, Callback> = {};
+const callbacks: Map<string, Callback> = new Map();
 
 let client: WebSocket | undefined;
 
 const reconnect = () => {
   client?.terminate?.();
   client = undefined;
-  Object.entries(callbacks).forEach(([id, callback]) => {
+  callbacks.forEach((callback, id) => {
     callback(offlineMessage);
-    delete callbacks[id];
+    callbacks.delete(id);
   });
   setTimeout(connect, 1e3);
 };
@@ -77,9 +77,9 @@ const connect = () => {
 
     const { id, result } = testResult;
 
-    callbacks[id]?.(result);
+    callbacks.get(id)?.(result);
 
-    delete callbacks[id];
+    callbacks.delete(id);
   });
 };
 
@@ -96,7 +96,7 @@ export const runTest = (
     }
 
     const id = uuidv4();
-    callbacks[id] = resolve;
+    callbacks.set(id, resolve);
 
     client.send(
       JSON.stringify({
