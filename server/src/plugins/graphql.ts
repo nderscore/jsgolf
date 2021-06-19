@@ -5,6 +5,7 @@ import mercuriusAuth from 'mercurius-auth';
 import mercuriusCodegen, { loadSchemaFiles } from 'mercurius-codegen';
 import { buildSchema } from 'graphql';
 import path from 'path';
+import { getGraphQLRateLimiter } from 'graphql-rate-limit';
 
 import { config } from '../constants/config';
 import { prisma } from '../lib/prisma';
@@ -12,6 +13,8 @@ import { Query } from '../query';
 import { Mutation } from '../mutation';
 import { loaders } from '../loaders';
 import { runTest } from '../lib/testRunnerClient';
+import { PrismaRateLimitStore } from '../lib/PrismaRateLimitStore';
+import { addRateLimitDirectiveToSchema } from '../lib/addRateLimitDirectiveToSchema';
 
 const BASE_PATH = path.resolve(__dirname, '../graphql');
 
@@ -40,6 +43,7 @@ const buildContext = async (request: FastifyRequest, _reply: FastifyReply) => {
   };
 };
 
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 type PromiseType<T> = T extends PromiseLike<infer U> ? U : T;
 
 declare module 'mercurius' {
@@ -74,6 +78,20 @@ export const setupGraphQL = (app: FastifyInstance) => {
     resolvers,
     loaders,
     context: buildContext,
+    schemaTransforms: [
+      addRateLimitDirectiveToSchema(
+        getGraphQLRateLimiter({
+          identifyContext: (
+            ctx: UnwrapPromise<ReturnType<typeof buildContext>>,
+          ) => {
+            return ctx.auth?.userId ?? '';
+          },
+          store: new PrismaRateLimitStore({ prisma }),
+          formatError: ({ fieldName }) =>
+            `Rate limit exceeded for '${fieldName}'`,
+        }),
+      ),
+    ],
   });
 
   app.register(mercuriusAuth, {

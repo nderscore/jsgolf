@@ -1,4 +1,7 @@
 type Mutation {
+  """
+  Creates a new code golf Challenge
+  """
   createChallenge(
     title: String!,
     description: String!,
@@ -6,15 +9,57 @@ type Mutation {
     setupCode: String!,
     testCode: String!,
     referenceSolution: String!
-  ): CreateChallengeResult! @auth(role: CREATOR)
+  ): CreateChallengeResult!
+    @auth(role: CREATOR)
+    @rateLimit(max: 1, window: "5m")
 
-  testChallenge(setupCode: String!, testCode: String!, solution: String!): Result! @auth(role: CREATOR)
+  """
+  Executes a dry run of arbitrary code golf Challenge code
+  """
+  testChallenge(
+    setupCode: String!,
+    testCode: String!,
+    solution: String!
+  ): Result!
+    @auth(role: CREATOR)
+    @rateLimit(max: 5, window: "1m")
 
-  createSolution(challenge: ID!, solution: String!): CreateSolutionResult! @auth
+  """
+  Submits a solution to a published Challenege
+  """
+  createSolution(
+    challenge: ID!,
+    solutionCode: String!
+  ): CreateSolutionResult!
+    @auth
+    @rateLimit(max: 2, window: "1m")
 
-  testSolution(challenge: ID!, solution: String!): Result! @auth
+  """
+  Executes a dry run of a solution
+  """
+  testSolution(
+    challenge: ID!,
+    solutionCode: String!
+  ): Result!
+    @auth
+    @rateLimit(max: 5, window: "1m")
 
-  upvote(challenge: ID!): Boolean! @auth(role: CREATOR)
+  """
+  Upvote a proposed Challenge
+  """
+  upvote(
+    challenge: ID!
+  ): Boolean!
+    @auth(role: CREATOR)
+    @rateLimit(max: 3, window: "1m")
 
-  downvote(challenge: ID!, reason: String): Boolean! @auth(role: CREATOR)
+  """
+  Downvote a proposed Challenge with reason
+  """
+  downvote(
+    challenge: ID!,
+    reason: String
+  ): Boolean!
+    @auth(role: CREATOR)
+    @rateLimit(max: 3, window: "1m")
 }

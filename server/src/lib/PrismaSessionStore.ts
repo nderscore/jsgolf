@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 
 export const DEFAULT_EXPIRY_PERIOD = 15 * 60e3; // 15 minutes
 
-export type PrismaSessionStoreOptiopns = {
+export type PrismaSessionStoreOptions = {
   prisma: PrismaClient;
   expiryPeriod?: number;
 };
@@ -18,11 +18,12 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
   constructor({
     prisma,
     expiryPeriod = DEFAULT_EXPIRY_PERIOD,
-  }: PrismaSessionStoreOptiopns) {
+  }: PrismaSessionStoreOptions) {
     super();
 
     this.prisma = prisma;
 
+    this.flushExpired();
     setInterval(() => this.flushExpired(), expiryPeriod);
   }
 
@@ -43,7 +44,7 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
     expiry?: number | null,
     sessionData?: T,
   ) {
-    const expiresAt = new Date(expiry || Date.now());
+    const expiresAt = expiry ? new Date(expiry) : new Date();
     const data = (
       sessionData !== undefined ? JSON.stringify(sessionData) : undefined
     ) as string;

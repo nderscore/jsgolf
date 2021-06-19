@@ -78,11 +78,17 @@ export enum Role {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Creates a new code golf Challenge */
   createChallenge: CreateChallengeResult;
+  /** Executes a dry run of arbitrary code golf Challenge code */
   testChallenge: Result;
+  /** Submits a solution to a published Challenege */
   createSolution: CreateSolutionResult;
+  /** Executes a dry run of a solution */
   testSolution: Result;
+  /** Upvote a proposed Challenge */
   upvote: Scalars['Boolean'];
+  /** Downvote a proposed Challenge with reason */
   downvote: Scalars['Boolean'];
 };
 
@@ -103,12 +109,12 @@ export type MutationtestChallengeArgs = {
 
 export type MutationcreateSolutionArgs = {
   challenge: Scalars['ID'];
-  solution: Scalars['String'];
+  solutionCode: Scalars['String'];
 };
 
 export type MutationtestSolutionArgs = {
   challenge: Scalars['ID'];
-  solution: Scalars['String'];
+  solutionCode: Scalars['String'];
 };
 
 export type MutationupvoteArgs = {
@@ -321,6 +327,21 @@ export type authDirectiveResolver<
   Args = authDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
+export type rateLimitDirectiveArgs = {
+  max?: Maybe<Scalars['Int']>;
+  window?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
+  identityArgs?: Maybe<Array<Maybe<Scalars['String']>>>;
+  arrayLengthField?: Maybe<Scalars['String']>;
+};
+
+export type rateLimitDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = MercuriusContext,
+  Args = rateLimitDirectiveArgs,
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
 export type ChallengeResolvers<
   ContextType = MercuriusContext,
   ParentType extends ResolversParentTypes['Challenge'] = ResolversParentTypes['Challenge'],
@@ -394,13 +415,13 @@ export type MutationResolvers<
     ResolversTypes['CreateSolutionResult'],
     ParentType,
     ContextType,
-    RequireFields<MutationcreateSolutionArgs, 'challenge' | 'solution'>
+    RequireFields<MutationcreateSolutionArgs, 'challenge' | 'solutionCode'>
   >;
   testSolution?: Resolver<
     ResolversTypes['Result'],
     ParentType,
     ContextType,
-    RequireFields<MutationtestSolutionArgs, 'challenge' | 'solution'>
+    RequireFields<MutationtestSolutionArgs, 'challenge' | 'solutionCode'>
   >;
   upvote?: Resolver<
     ResolversTypes['Boolean'],
@@ -529,6 +550,7 @@ export type Resolvers<ContextType = MercuriusContext> = {
 export type IResolvers<ContextType = MercuriusContext> = Resolvers<ContextType>;
 export type DirectiveResolvers<ContextType = MercuriusContext> = {
   auth?: authDirectiveResolver<any, any, ContextType>;
+  rateLimit?: rateLimitDirectiveResolver<any, any, ContextType>;
 };
 
 /**

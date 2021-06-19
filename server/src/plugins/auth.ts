@@ -36,7 +36,7 @@ export const setupAuth = (app: FastifyInstance) => {
     saveUninitialized: false,
     cookie: {
       secure: false, // FIXME: set secure here in prod?
-      maxAge: 14 * 24 * 60 * 60e3, // 14 days
+      maxAge: 14 * 24 * 60 * 60, // 14 days (seconds)
     },
   });
 

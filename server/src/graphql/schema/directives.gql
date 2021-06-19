@@ -7,5 +7,13 @@ enum Role {
 }
 
 directive @auth(
-  role: Role = USER,
+  role: Role = USER
 ) on OBJECT | FIELD_DEFINITION
+
+directive @rateLimit(
+  max: Int,
+  window: String,
+  message: String,
+  identityArgs: [String],
+  arrayLengthField: String
+) on FIELD_DEFINITION
