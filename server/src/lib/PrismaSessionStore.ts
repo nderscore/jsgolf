@@ -48,36 +48,24 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
       sessionData !== undefined ? JSON.stringify(sessionData) : undefined
     ) as string;
 
-    const existingSession = await this.prisma.session.findUnique({
+    const result = await this.prisma.session.upsert({
       where: { id: sessionId },
+      update: {
+        expiresAt,
+        data,
+      },
+      create: {
+        id: sessionId,
+        expiresAt,
+        data: data || '{}',
+      },
     });
-
-    let result;
-
-    if (existingSession) {
-      result = await this.prisma.session.update({
-        where: { id: sessionId },
-        data: {
-          expiresAt,
-          data,
-        },
-      });
-    } else {
-      result = await this.prisma.session.create({
-        data: {
-          id: sessionId,
-          expiresAt,
-          data: data || '{}',
-        },
-      });
-    }
 
     return result;
   }
 
   async set(sessionId: string, sessionData: T, expiry?: number | null) {
     await this.upsertSession(sessionId, expiry, sessionData);
-    return;
   }
 
   async get(sessionId: string): Promise<[SessionData, number | null] | null> {
@@ -99,12 +87,9 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
     await this.prisma.session.delete({
       where: { id: sessionId },
     });
-
-    return;
   }
 
   async touch(sessionId: string, expiry?: number | null): Promise<void> {
     await this.upsertSession(sessionId, expiry);
-    return;
   }
 }
