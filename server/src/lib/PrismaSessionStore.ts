@@ -2,12 +2,10 @@ import { PrismaClient } from '.prisma/client';
 import { SessionData, SessionStore } from '@mgcrea/fastify-session';
 import { EventEmitter } from 'events';
 
-export const DEFAULT_TTL = 14 * 24 * 60 * 60e3; // 14 days
 export const DEFAULT_EXPIRY_PERIOD = 15 * 60e3; // 15 minutes
 
 export type PrismaSessionStoreOptiopns = {
   prisma: PrismaClient;
-  ttl?: number;
   expiryPeriod?: number;
 };
 
