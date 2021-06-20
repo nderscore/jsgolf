@@ -2,11 +2,11 @@ import { PrismaClient } from '.prisma/client';
 import { SessionData, SessionStore } from '@mgcrea/fastify-session';
 import { EventEmitter } from 'events';
 
-export const DEFAULT_EXPIRY_PERIOD = 15 * 60e3; // 15 minutes
+export const DEFAULT_PURGE_INTERVAL = 24 * 60 * 60e3; // 1 day
 
 export type PrismaSessionStoreOptions = {
   prisma: PrismaClient;
-  expiryPeriod?: number;
+  purgeInterval?: number;
 };
 
 export class PrismaSessionStore<T extends SessionData = SessionData>
@@ -17,26 +17,28 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
 
   constructor({
     prisma,
-    expiryPeriod = DEFAULT_EXPIRY_PERIOD,
+    purgeInterval = DEFAULT_PURGE_INTERVAL,
   }: PrismaSessionStoreOptions) {
     super();
 
     this.prisma = prisma;
 
-    this.flushExpired();
-    setInterval(() => this.flushExpired(), expiryPeriod);
+    this.purgeExpired();
+    setInterval(() => this.purgeExpired(), purgeInterval);
   }
 
-  private flushExpired() {
+  private async purgeExpired() {
     const now = new Date();
 
-    this.prisma.session.deleteMany({
+    const { count } = await this.prisma.session.deleteMany({
       where: {
         expiresAt: {
           lte: now,
         },
       },
     });
+
+    return count;
   }
 
   private async upsertSession(
@@ -45,6 +47,7 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
     sessionData?: T,
   ) {
     const expiresAt = expiry ? new Date(expiry) : new Date();
+
     const data = (
       sessionData !== undefined ? JSON.stringify(sessionData) : undefined
     ) as string;
@@ -79,6 +82,7 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
     }
 
     const data = JSON.parse(session.data || '{}');
+
     const expiry = session.expiresAt.getTime();
 
     return [data, expiry];

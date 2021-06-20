@@ -1,10 +1,19 @@
 import type { Store as RateLimitStore } from 'graphql-rate-limit';
 import type { PrismaClient } from '@prisma/client';
 
-export const DEFAULT_EXPIRY_PERIOD = 15 * 60e3; // 15 minutes
+export const DEFAULT_PURGE_INTERVAL = 30 * 60e3; // 30 minutes
 
-const getIdField = ({ contextIdentity, fieldIdentity }: Identity) =>
-  `${fieldIdentity}:${contextIdentity}`;
+const getIdField = ({ contextIdentity, fieldIdentity }: Identity) => {
+  if (!contextIdentity) {
+    throw new Error('Expected user id in context identity.');
+  }
+
+  return `${fieldIdentity}:${contextIdentity}`;
+};
+
+const toDate = (val: number) => new Date(val);
+
+const toTimestamp = (val: Date) => val.getTime();
 
 type Identity = {
   readonly contextIdentity: string;
@@ -13,7 +22,7 @@ type Identity = {
 
 export type PrismaRateLimitStoreOptions = {
   prisma: PrismaClient;
-  expiryPeriod?: number;
+  purgeInterval?: number;
 };
 
 export class PrismaRateLimitStore implements RateLimitStore {
@@ -21,24 +30,26 @@ export class PrismaRateLimitStore implements RateLimitStore {
 
   constructor({
     prisma,
-    expiryPeriod = DEFAULT_EXPIRY_PERIOD,
+    purgeInterval = DEFAULT_PURGE_INTERVAL,
   }: PrismaRateLimitStoreOptions) {
     this.prisma = prisma;
 
-    this.flushExpired();
-    setInterval(() => this.flushExpired(), expiryPeriod);
+    this.purgeExpired();
+    setInterval(() => this.purgeExpired(), purgeInterval);
   }
 
-  private flushExpired() {
+  private async purgeExpired() {
     const now = new Date();
 
-    this.prisma.rateLimit.deleteMany({
+    const { count } = await this.prisma.rateLimit.deleteMany({
       where: {
         expiresAt: {
           lte: now,
         },
       },
     });
+
+    return count;
   }
 
   async setForIdentity(
@@ -46,17 +57,11 @@ export class PrismaRateLimitStore implements RateLimitStore {
     timestamps: readonly number[],
     windowMs?: number,
   ) {
-    const { contextIdentity } = identity;
-
-    if (!contextIdentity) {
-      throw new Error('Expected user id.');
-    }
-
     const id = getIdField(identity);
 
     const expiresAt = new Date(Math.max(...timestamps) + (windowMs || 0));
 
-    const dateTimestamps = timestamps.map(val => new Date(val));
+    const dateTimestamps = timestamps.map(toDate);
 
     await this.prisma.rateLimit.upsert({
       where: { id },
@@ -73,18 +78,12 @@ export class PrismaRateLimitStore implements RateLimitStore {
   }
 
   async getForIdentity(identity: Identity): Promise<readonly number[]> {
-    const { contextIdentity } = identity;
-
-    if (!contextIdentity) {
-      throw new Error('Expected user id.');
-    }
-
     const id = getIdField(identity);
 
     const data = await this.prisma.rateLimit.findUnique({
       where: { id },
     });
 
-    return data?.timestamps?.map(val => val.getTime()) || [];
+    return data?.timestamps?.map?.(toTimestamp) || [];
   }
 }
