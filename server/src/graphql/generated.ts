@@ -681,6 +681,27 @@ export type createChallengeMutation = { __typename?: 'Mutation' } & {
   };
 };
 
+export type testSolutionMutationVariables = Exact<{
+  challenge: Scalars['ID'];
+  solutionCode: Scalars['String'];
+}>;
+
+export type testSolutionMutation = { __typename?: 'Mutation' } & {
+  testSolution: { __typename?: 'Result' } & Pick<Result, 'success' | 'errors'>;
+};
+
+export type createSolutionMutationVariables = Exact<{
+  challenge: Scalars['ID'];
+  solutionCode: Scalars['String'];
+}>;
+
+export type createSolutionMutation = { __typename?: 'Mutation' } & {
+  createSolution: { __typename?: 'CreateSolutionResult' } & {
+    result: { __typename?: 'Result' } & Pick<Result, 'success' | 'errors'>;
+    solution?: Maybe<{ __typename?: 'Solution' } & Pick<Solution, 'size'>>;
+  };
+};
+
 export type getChallengesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type getChallengesQuery = { __typename?: 'Query' } & {
@@ -1057,6 +1078,179 @@ export const createChallengeDocument = {
 } as unknown as DocumentNode<
   createChallengeMutation,
   createChallengeMutationVariables
+>;
+export const testSolutionDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'testSolution' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'challenge' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'solutionCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'testSolution' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'challenge' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'challenge' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'solutionCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'solutionCode' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'success' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'errors' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  testSolutionMutation,
+  testSolutionMutationVariables
+>;
+export const createSolutionDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'createSolution' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'challenge' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'solutionCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createSolution' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'challenge' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'challenge' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'solutionCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'solutionCode' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'result' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'success' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'errors' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'solution' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  createSolutionMutation,
+  createSolutionMutationVariables
 >;
 export const getChallengesDocument = {
   kind: 'Document',

@@ -52,14 +52,14 @@ export const challenge: MercuriusLoaders = {
       return Promise.all(batch);
     },
 
-    async solutions(queries, { prisma }) {
+    async solutions(queries, { auth, prisma }) {
       const batch = queries.map(async ({ obj: { id } }) => {
         const results = await prisma.solution.findMany({
           where: { challengeId: id },
           orderBy: [{ size: 'desc' }, { timestamp: 'desc' }],
         });
 
-        return results.map(result => toGQLSolution(result));
+        return results.map(result => toGQLSolution(result, auth));
       });
 
       return Promise.all(batch);

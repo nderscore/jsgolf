@@ -1,0 +1,30 @@
+mutation testSolution(
+  $challenge: ID!
+  $solutionCode: String!
+) {
+  testSolution(
+    challenge: $challenge,
+    solutionCode: $solutionCode
+  ) {
+    success
+    errors
+  }
+}
+
+mutation createSolution(
+  $challenge: ID!
+  $solutionCode: String!
+) {
+  createSolution(
+    challenge: $challenge,
+    solutionCode: $solutionCode
+  ) {
+    result {
+      success
+      errors
+    }
+    solution {
+    	size
+    }
+  }
+}
