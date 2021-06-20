@@ -6,6 +6,7 @@ import mercuriusCodegen, { loadSchemaFiles } from 'mercurius-codegen';
 import { buildSchema } from 'graphql';
 import path from 'path';
 import { getGraphQLRateLimiter } from 'graphql-rate-limit';
+import NoIntrospection from 'graphql-disable-introspection';
 
 import { config } from '../constants/config';
 import { prisma } from '../lib/prisma';
@@ -73,11 +74,15 @@ export const setupGraphQL = (app: FastifyInstance) => {
     Mutation,
   };
 
+  const validationRules = !config.DEV ? [NoIntrospection] : [];
+
   app.register(mercurius, {
     schema,
     resolvers,
     loaders,
     context: buildContext,
+    queryDepth: config.DEV ? 7 : 3,
+    validationRules,
     schemaTransforms: [
       addRateLimitDirectiveToSchema(
         getGraphQLRateLimiter({

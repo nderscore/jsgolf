@@ -2151,6 +2151,11 @@ graceful-fs@^4.1.2:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
+graphql-disable-introspection@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/graphql-disable-introspection/-/graphql-disable-introspection-1.2.0.tgz#3813885ea1053c65a7a0090e2cb160388a5575a2"
+  integrity sha512-bRY1LWCOzho/snYsLZ0N2J78zgCDtcFdbdZILxWGi8TifLLYf2bHZ3yw5r1NX42K87AMEOT0d11XScVrcJ+Zig==
+
 graphql-jit@^0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/graphql-jit/-/graphql-jit-0.5.1.tgz#738cb2c772a65e9682f04f20dc8edac4365023da"
