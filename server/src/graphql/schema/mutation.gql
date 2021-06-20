@@ -8,7 +8,7 @@ type Mutation {
     tags: [String],
     setupCode: String!,
     testCode: String!,
-    referenceSolution: String!
+    solutionCode: String!
   ): CreateChallengeResult!
     @auth(role: CREATOR)
     @rateLimit(max: 1, window: "5m")
@@ -19,7 +19,7 @@ type Mutation {
   testChallenge(
     setupCode: String!,
     testCode: String!,
-    solution: String!
+    solutionCode: String!
   ): Result!
     @auth(role: CREATOR)
     @rateLimit(max: 5, window: "1m")

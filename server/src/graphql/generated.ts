@@ -98,13 +98,13 @@ export type MutationcreateChallengeArgs = {
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   setupCode: Scalars['String'];
   testCode: Scalars['String'];
-  referenceSolution: Scalars['String'];
+  solutionCode: Scalars['String'];
 };
 
 export type MutationtestChallengeArgs = {
   setupCode: Scalars['String'];
   testCode: Scalars['String'];
-  solution: Scalars['String'];
+  solutionCode: Scalars['String'];
 };
 
 export type MutationcreateSolutionArgs = {
@@ -399,7 +399,7 @@ export type MutationResolvers<
     ContextType,
     RequireFields<
       MutationcreateChallengeArgs,
-      'title' | 'description' | 'setupCode' | 'testCode' | 'referenceSolution'
+      'title' | 'description' | 'setupCode' | 'testCode' | 'solutionCode'
     >
   >;
   testChallenge?: Resolver<
@@ -408,7 +408,7 @@ export type MutationResolvers<
     ContextType,
     RequireFields<
       MutationtestChallengeArgs,
-      'setupCode' | 'testCode' | 'solution'
+      'setupCode' | 'testCode' | 'solutionCode'
     >
   >;
   createSolution?: Resolver<
