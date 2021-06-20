@@ -56,8 +56,8 @@ export type Challenge = {
   status: ChallengeStatus;
   setupCode: Scalars['String'];
   testCode: Scalars['String'];
-  tags: Array<Maybe<Scalars['String']>>;
-  solutions: Array<Maybe<Solution>>;
+  tags: Array<Scalars['String']>;
+  solutions?: Maybe<Array<Solution>>;
   upvotes?: Maybe<Scalars['Int']>;
   downvotes?: Maybe<Scalars['Int']>;
   rejectionReason?: Maybe<Scalars['String']>;
@@ -96,7 +96,7 @@ export type Mutation = {
 export type MutationcreateChallengeArgs = {
   title: Scalars['String'];
   description: Scalars['String'];
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tags?: Maybe<Array<Scalars['String']>>;
   setupCode: Scalars['String'];
   testCode: Scalars['String'];
   solutionCode: Scalars['String'];
@@ -129,11 +129,16 @@ export type MutationdownvoteArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get a user profile by ID */
   getUser?: Maybe<User>;
+  /** Get the currently authenticated user's profile */
   getOwnUser?: Maybe<User>;
+  /** Get a challenge by ID */
   getChallenge?: Maybe<Challenge>;
-  getChallenges: Array<Maybe<Challenge>>;
-  getProposedChallenges: Array<Maybe<Challenge>>;
+  /** Get list of published challenges */
+  getChallenges: Array<Challenge>;
+  /** Get list of proposed challenges */
+  getProposedChallenges: Array<Challenge>;
 };
 
 export type QuerygetUserArgs = {
@@ -172,8 +177,8 @@ export type User = {
   id: Scalars['ID'];
   githubId: Scalars['Int'];
   name: Scalars['String'];
-  challenges?: Maybe<Array<Maybe<Challenge>>>;
-  solutions?: Maybe<Array<Maybe<Solution>>>;
+  challenges: Array<Challenge>;
+  solutions: Array<Solution>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -357,13 +362,9 @@ export type ChallengeResolvers<
   status?: Resolver<ResolversTypes['ChallengeStatus'], ParentType, ContextType>;
   setupCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   testCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  tags?: Resolver<
-    Array<Maybe<ResolversTypes['String']>>,
-    ParentType,
-    ContextType
-  >;
+  tags?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   solutions?: Resolver<
-    Array<Maybe<ResolversTypes['Solution']>>,
+    Maybe<Array<ResolversTypes['Solution']>>,
     ParentType,
     ContextType
   >;
@@ -456,12 +457,12 @@ export type QueryResolvers<
     RequireFields<QuerygetChallengeArgs, 'id'>
   >;
   getChallenges?: Resolver<
-    Array<Maybe<ResolversTypes['Challenge']>>,
+    Array<ResolversTypes['Challenge']>,
     ParentType,
     ContextType
   >;
   getProposedChallenges?: Resolver<
-    Array<Maybe<ResolversTypes['Challenge']>>,
+    Array<ResolversTypes['Challenge']>,
     ParentType,
     ContextType
   >;
@@ -520,12 +521,12 @@ export type UserResolvers<
   githubId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   challenges?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['Challenge']>>>,
+    Array<ResolversTypes['Challenge']>,
     ParentType,
     ContextType
   >;
   solutions?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['Solution']>>>,
+    Array<ResolversTypes['Solution']>,
     ParentType,
     ContextType
   >;
@@ -594,13 +595,8 @@ export interface Loaders<
     status?: LoaderResolver<ChallengeStatus, Challenge, {}, TContext>;
     setupCode?: LoaderResolver<Scalars['String'], Challenge, {}, TContext>;
     testCode?: LoaderResolver<Scalars['String'], Challenge, {}, TContext>;
-    tags?: LoaderResolver<
-      Array<Maybe<Scalars['String']>>,
-      Challenge,
-      {},
-      TContext
-    >;
-    solutions?: LoaderResolver<Array<Maybe<Solution>>, Challenge, {}, TContext>;
+    tags?: LoaderResolver<Array<Scalars['String']>, Challenge, {}, TContext>;
+    solutions?: LoaderResolver<Maybe<Array<Solution>>, Challenge, {}, TContext>;
     upvotes?: LoaderResolver<Maybe<Scalars['Int']>, Challenge, {}, TContext>;
     downvotes?: LoaderResolver<Maybe<Scalars['Int']>, Challenge, {}, TContext>;
     rejectionReason?: LoaderResolver<
@@ -655,18 +651,8 @@ export interface Loaders<
     id?: LoaderResolver<Scalars['ID'], User, {}, TContext>;
     githubId?: LoaderResolver<Scalars['Int'], User, {}, TContext>;
     name?: LoaderResolver<Scalars['String'], User, {}, TContext>;
-    challenges?: LoaderResolver<
-      Maybe<Array<Maybe<Challenge>>>,
-      User,
-      {},
-      TContext
-    >;
-    solutions?: LoaderResolver<
-      Maybe<Array<Maybe<Solution>>>,
-      User,
-      {},
-      TContext
-    >;
+    challenges?: LoaderResolver<Array<Challenge>, User, {}, TContext>;
+    solutions?: LoaderResolver<Array<Solution>, User, {}, TContext>;
   };
 }
 export type testChallengeMutationVariables = Exact<{
@@ -679,16 +665,30 @@ export type testChallengeMutation = { __typename?: 'Mutation' } & {
   testChallenge: { __typename?: 'Result' } & Pick<Result, 'success' | 'errors'>;
 };
 
+export type createChallengeMutationVariables = Exact<{
+  title: Scalars['String'];
+  description: Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  setupCode: Scalars['String'];
+  testCode: Scalars['String'];
+  solutionCode: Scalars['String'];
+}>;
+
+export type createChallengeMutation = { __typename?: 'Mutation' } & {
+  createChallenge: { __typename?: 'CreateChallengeResult' } & {
+    result: { __typename?: 'Result' } & Pick<Result, 'success' | 'errors'>;
+    challenge?: Maybe<{ __typename?: 'Challenge' } & Pick<Challenge, 'id'>>;
+  };
+};
+
 export type getChallengesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type getChallengesQuery = { __typename?: 'Query' } & {
   getChallenges: Array<
-    Maybe<
-      { __typename?: 'Challenge' } & Pick<
-        Challenge,
-        'id' | 'title' | 'published' | 'tags'
-      > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
-    >
+    { __typename?: 'Challenge' } & Pick<
+      Challenge,
+      'id' | 'title' | 'published' | 'tags'
+    > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
   >;
 };
 
@@ -698,12 +698,10 @@ export type getProposedChallengesQueryVariables = Exact<{
 
 export type getProposedChallengesQuery = { __typename?: 'Query' } & {
   getProposedChallenges: Array<
-    Maybe<
-      { __typename?: 'Challenge' } & Pick<
-        Challenge,
-        'id' | 'title' | 'created' | 'tags' | 'upvotes' | 'downvotes'
-      > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
-    >
+    { __typename?: 'Challenge' } & Pick<
+      Challenge,
+      'id' | 'title' | 'created' | 'tags' | 'upvotes' | 'downvotes'
+    > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
   >;
 };
 
@@ -729,8 +727,8 @@ export type getChallengeQuery = { __typename?: 'Query' } & {
           User,
           'id' | 'githubId' | 'name'
         >;
-        solutions: Array<
-          Maybe<
+        solutions?: Maybe<
+          Array<
             { __typename?: 'Solution' } & Pick<
               Solution,
               'timestamp' | 'size'
@@ -756,30 +754,16 @@ export type getUserProfileQueryVariables = Exact<{
 export type getUserProfileQuery = { __typename?: 'Query' } & {
   getUser?: Maybe<
     { __typename?: 'User' } & Pick<User, 'id' | 'githubId' | 'name'> & {
-        challenges?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: 'Challenge' } & Pick<
-                Challenge,
-                'title' | 'published'
-              >
-            >
-          >
+        challenges: Array<
+          { __typename?: 'Challenge' } & Pick<Challenge, 'title' | 'published'>
         >;
-        solutions?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: 'Solution' } & Pick<
-                Solution,
-                'size' | 'timestamp'
-              > & {
-                  challenge: { __typename?: 'Challenge' } & Pick<
-                    Challenge,
-                    'title'
-                  >;
-                }
-            >
-          >
+        solutions: Array<
+          { __typename?: 'Solution' } & Pick<Solution, 'size' | 'timestamp'> & {
+              challenge: { __typename?: 'Challenge' } & Pick<
+                Challenge,
+                'title'
+              >;
+            }
         >;
       }
   >;
@@ -883,6 +867,196 @@ export const testChallengeDocument = {
 } as unknown as DocumentNode<
   testChallengeMutation,
   testChallengeMutationVariables
+>;
+export const createChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'createChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'title' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'description' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'tags' } },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'String' },
+              },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'setupCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'testCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'solutionCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'title' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'title' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'description' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'description' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'tags' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'tags' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'setupCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'setupCode' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'testCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'testCode' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'solutionCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'solutionCode' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'result' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'success' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'errors' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'challenge' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  createChallengeMutation,
+  createChallengeMutationVariables
 >;
 export const getChallengesDocument = {
   kind: 'Document',

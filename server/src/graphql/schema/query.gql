@@ -1,8 +1,31 @@
 type Query {
-  getUser(id: ID!): User
-  getOwnUser: User @auth
+  """
+  Get a user profile by ID
+  """
+  getUser(
+    id: ID!
+  ): User
 
-  getChallenge(id: ID!): Challenge
-  getChallenges: [Challenge]!
-  getProposedChallenges: [Challenge]!
+  """
+  Get the currently authenticated user's profile
+  """
+  getOwnUser: User
+    @auth
+
+  """
+  Get a challenge by ID
+  """
+  getChallenge(
+    id: ID!
+  ): Challenge
+
+  """
+  Get list of published challenges
+  """
+  getChallenges: [Challenge!]!
+
+  """
+  Get list of proposed challenges
+  """
+  getProposedChallenges: [Challenge!]!
 }

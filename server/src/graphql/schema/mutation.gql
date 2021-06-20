@@ -5,7 +5,7 @@ type Mutation {
   createChallenge(
     title: String!,
     description: String!,
-    tags: [String],
+    tags: [String!],
     setupCode: String!,
     testCode: String!,
     solutionCode: String!

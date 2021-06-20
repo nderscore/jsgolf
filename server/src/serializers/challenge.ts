@@ -1,5 +1,7 @@
 import { Challenge } from '@prisma/client';
+
 import { ChallengeStatus as GQLChallengeStatus } from '../graphql';
+import { toGQLResult } from './result';
 
 export const toGQLChallenge = (challenge: Challenge) => {
   return {
@@ -14,5 +16,15 @@ export const toGQLChallenge = (challenge: Challenge) => {
     testCode: challenge.testCode,
     tags: challenge.tags,
     rejectionReason: challenge.rejectionReason,
+  };
+};
+
+export const toGQLChallengeResult = (
+  result: true | string,
+  challenge?: Challenge,
+) => {
+  return {
+    challenge: challenge && toGQLChallenge(challenge),
+    result: toGQLResult(result),
   };
 };

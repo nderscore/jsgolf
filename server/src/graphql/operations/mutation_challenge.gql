@@ -12,3 +12,29 @@ mutation testChallenge(
     errors
   }
 }
+
+mutation createChallenge(
+  $title: String!,
+  $description: String!,
+  $tags: [String!],
+  $setupCode: String!,
+  $testCode: String!,
+  $solutionCode: String!
+) {
+  createChallenge(
+    title: $title,
+    description: $description,
+    tags: $tags,
+    setupCode: $setupCode,
+    testCode: $testCode,
+    solutionCode: $solutionCode
+  ) {
+    result {
+      success
+      errors
+    }
+    challenge {
+      id
+    }
+  }
+}
