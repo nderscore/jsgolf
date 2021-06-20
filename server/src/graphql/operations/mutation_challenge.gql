@@ -1,0 +1,14 @@
+mutation testChallenge(
+  $setupCode: String!,
+  $testCode: String!,
+  $solutionCode: String!
+) {
+  testChallenge(
+    setupCode: $setupCode,
+    testCode: $testCode,
+    solutionCode: $solutionCode
+  ) {
+    success
+    errors
+  }
+}

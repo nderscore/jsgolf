@@ -1,0 +1,47 @@
+query getChallenges {
+  getChallenges {
+    id
+    title
+    published
+    author { name }
+    tags
+  }
+}
+
+query getProposedChallenges {
+  getProposedChallenges {
+    id
+    title
+    created
+    author { name }
+    tags
+    upvotes
+    downvotes
+  }
+}
+
+query getChallenge(
+  $id: ID!
+) {
+  getChallenge(id: $id) {
+    id
+    title
+    created
+    published
+    author {
+      id
+      githubId
+      name
+    }
+    status
+    tags
+    description
+    setupCode
+    testCode
+    solutions {
+      timestamp
+      author { name }
+      size
+    }
+  }
+}

@@ -1,0 +1,26 @@
+query getOwnUser {
+  getOwnUser {
+    id
+    githubId
+    name
+  }
+}
+
+query getUserProfile(
+  $id: ID!
+) {
+  getUser(id: $id) {
+    id
+    githubId
+    name
+    challenges {
+      title
+      published
+    }
+    solutions {
+      challenge { title }
+      size
+      timestamp
+    }
+  }
+}

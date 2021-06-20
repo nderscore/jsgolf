@@ -4,6 +4,7 @@ import type {
   GraphQLScalarTypeConfig,
 } from 'graphql';
 import type { MercuriusContext } from 'mercurius';
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -668,6 +669,512 @@ export interface Loaders<
     >;
   };
 }
+export type testChallengeMutationVariables = Exact<{
+  setupCode: Scalars['String'];
+  testCode: Scalars['String'];
+  solutionCode: Scalars['String'];
+}>;
+
+export type testChallengeMutation = { __typename?: 'Mutation' } & {
+  testChallenge: { __typename?: 'Result' } & Pick<Result, 'success' | 'errors'>;
+};
+
+export type getChallengesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type getChallengesQuery = { __typename?: 'Query' } & {
+  getChallenges: Array<
+    Maybe<
+      { __typename?: 'Challenge' } & Pick<
+        Challenge,
+        'id' | 'title' | 'published' | 'tags'
+      > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
+    >
+  >;
+};
+
+export type getProposedChallengesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type getProposedChallengesQuery = { __typename?: 'Query' } & {
+  getProposedChallenges: Array<
+    Maybe<
+      { __typename?: 'Challenge' } & Pick<
+        Challenge,
+        'id' | 'title' | 'created' | 'tags' | 'upvotes' | 'downvotes'
+      > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
+    >
+  >;
+};
+
+export type getChallengeQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type getChallengeQuery = { __typename?: 'Query' } & {
+  getChallenge?: Maybe<
+    { __typename?: 'Challenge' } & Pick<
+      Challenge,
+      | 'id'
+      | 'title'
+      | 'created'
+      | 'published'
+      | 'status'
+      | 'tags'
+      | 'description'
+      | 'setupCode'
+      | 'testCode'
+    > & {
+        author: { __typename?: 'User' } & Pick<
+          User,
+          'id' | 'githubId' | 'name'
+        >;
+        solutions: Array<
+          Maybe<
+            { __typename?: 'Solution' } & Pick<
+              Solution,
+              'timestamp' | 'size'
+            > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
+          >
+        >;
+      }
+  >;
+};
+
+export type getOwnUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type getOwnUserQuery = { __typename?: 'Query' } & {
+  getOwnUser?: Maybe<
+    { __typename?: 'User' } & Pick<User, 'id' | 'githubId' | 'name'>
+  >;
+};
+
+export type getUserProfileQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type getUserProfileQuery = { __typename?: 'Query' } & {
+  getUser?: Maybe<
+    { __typename?: 'User' } & Pick<User, 'id' | 'githubId' | 'name'> & {
+        challenges?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'Challenge' } & Pick<
+                Challenge,
+                'title' | 'published'
+              >
+            >
+          >
+        >;
+        solutions?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'Solution' } & Pick<
+                Solution,
+                'size' | 'timestamp'
+              > & {
+                  challenge: { __typename?: 'Challenge' } & Pick<
+                    Challenge,
+                    'title'
+                  >;
+                }
+            >
+          >
+        >;
+      }
+  >;
+};
+
+export const testChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'testChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'setupCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'testCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'solutionCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'testChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'setupCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'setupCode' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'testCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'testCode' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'solutionCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'solutionCode' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'success' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'errors' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  testChallengeMutation,
+  testChallengeMutationVariables
+>;
+export const getChallengesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getChallenges' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getChallenges' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'published' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'author' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'tags' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<getChallengesQuery, getChallengesQueryVariables>;
+export const getProposedChallengesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getProposedChallenges' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getProposedChallenges' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'created' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'author' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'tags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'upvotes' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'downvotes' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  getProposedChallengesQuery,
+  getProposedChallengesQueryVariables
+>;
+export const getChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'created' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'published' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'author' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'githubId' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'setupCode' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'testCode' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'solutions' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'author' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                          ],
+                        },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<getChallengeQuery, getChallengeQueryVariables>;
+export const getOwnUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getOwnUser' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getOwnUser' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'githubId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<getOwnUserQuery, getOwnUserQueryVariables>;
+export const getUserProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getUserProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'githubId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'challenges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'published' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'solutions' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'challenge' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'title' },
+                            },
+                          ],
+                        },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<getUserProfileQuery, getUserProfileQueryVariables>;
 declare module 'mercurius' {
   interface IResolvers
     extends Resolvers<import('mercurius').MercuriusContext> {}
