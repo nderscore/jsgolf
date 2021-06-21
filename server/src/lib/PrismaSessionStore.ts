@@ -48,9 +48,11 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
   ) {
     const expiresAt = expiry ? new Date(expiry) : new Date();
 
-    const data = (
-      sessionData !== undefined ? JSON.stringify(sessionData) : undefined
-    ) as string;
+    const data = sessionData?.userId
+      ? {
+          userId: sessionData.userId,
+        }
+      : undefined;
 
     const result = await this.prisma.session.upsert({
       where: { id: sessionId },
@@ -61,7 +63,7 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
       create: {
         id: sessionId,
         expiresAt,
-        data: data || '{}',
+        data: data || {},
       },
     });
 
@@ -81,7 +83,7 @@ export class PrismaSessionStore<T extends SessionData = SessionData>
       return null;
     }
 
-    const data = JSON.parse(session.data || '{}');
+    const data = (session.data as T) || {};
 
     const expiry = session.expiresAt.getTime();
 

@@ -10,7 +10,7 @@ CREATE TYPE "VoteValue" AS ENUM ('UP', 'DOWN');
 -- CreateTable
 CREATE TABLE "Session" (
     "id" TEXT NOT NULL,
-    "data" TEXT NOT NULL,
+    "data" JSONB NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL,
 
     PRIMARY KEY ("id")

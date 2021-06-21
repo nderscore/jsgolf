@@ -9,7 +9,7 @@ generator client {
 
 model Session {
   id        String   @id
-  data      String
+  data      Json
   expiresAt DateTime
 }
 
