@@ -1,0 +1,14 @@
+extend type Query {
+  """
+  Get a user profile by ID
+  """
+  getUser(
+    id: ID!
+  ): User
+
+  """
+  Get the currently authenticated user's profile
+  """
+  getOwnUser: User
+    @auth
+}

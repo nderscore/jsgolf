@@ -1,0 +1,21 @@
+extend type Mutation {
+  """
+  Submits a solution to a published Challenege
+  """
+  createSolution(
+    challenge: ID!,
+    solutionCode: String!
+  ): CreateSolutionResult!
+    @auth
+    @rateLimit(max: 2, window: "1m")
+
+  """
+  Executes a dry run of a solution
+  """
+  testSolution(
+    challenge: ID!,
+    solutionCode: String!
+  ): Result!
+    @auth
+    @rateLimit(max: 5, window: "1m")
+}

@@ -1,0 +1,26 @@
+extend type Mutation {
+  """
+  Executes a dry run of arbitrary code golf Challenge code
+  """
+  testChallenge(
+    setupCode: String!,
+    testCode: String!,
+    solutionCode: String!
+  ): Result!
+    @auth(role: CREATOR)
+    @rateLimit(max: 5, window: "1m")
+
+  """
+  Creates a new code golf Challenge
+  """
+  createChallenge(
+    title: String!,
+    description: String!,
+    tags: [String!],
+    setupCode: String!,
+    testCode: String!,
+    solutionCode: String!
+  ): CreateChallengeResult!
+    @auth(role: CREATOR)
+    @rateLimit(max: 1, window: "5m")
+}

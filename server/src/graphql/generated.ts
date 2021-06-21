@@ -36,6 +36,78 @@ export type Scalars = {
   _FieldSet: any;
 };
 
+export type Query = {
+  __typename?: 'Query';
+  /** Get a challenge by ID */
+  getChallenge?: Maybe<Challenge>;
+  /** Get list of published challenges */
+  getChallenges: Array<Challenge>;
+  /** Get list of proposed challenges */
+  getProposedChallenges: Array<Challenge>;
+  /** Get a user profile by ID */
+  getUser?: Maybe<User>;
+  /** Get the currently authenticated user's profile */
+  getOwnUser?: Maybe<User>;
+};
+
+export type QuerygetChallengeArgs = {
+  id: Scalars['ID'];
+};
+
+export type QuerygetUserArgs = {
+  id: Scalars['ID'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  /** Executes a dry run of arbitrary code golf Challenge code */
+  testChallenge: Result;
+  /** Creates a new code golf Challenge */
+  createChallenge: CreateChallengeResult;
+  /** Submits a solution to a published Challenege */
+  createSolution: CreateSolutionResult;
+  /** Executes a dry run of a solution */
+  testSolution: Result;
+  /** Upvote a proposed Challenge */
+  upvote: Scalars['Boolean'];
+  /** Downvote a proposed Challenge with reason */
+  downvote: Scalars['Boolean'];
+};
+
+export type MutationtestChallengeArgs = {
+  setupCode: Scalars['String'];
+  testCode: Scalars['String'];
+  solutionCode: Scalars['String'];
+};
+
+export type MutationcreateChallengeArgs = {
+  title: Scalars['String'];
+  description: Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']>>;
+  setupCode: Scalars['String'];
+  testCode: Scalars['String'];
+  solutionCode: Scalars['String'];
+};
+
+export type MutationcreateSolutionArgs = {
+  challenge: Scalars['ID'];
+  solutionCode: Scalars['String'];
+};
+
+export type MutationtestSolutionArgs = {
+  challenge: Scalars['ID'];
+  solutionCode: Scalars['String'];
+};
+
+export type MutationupvoteArgs = {
+  challenge: Scalars['ID'];
+};
+
+export type MutationdownvoteArgs = {
+  challenge: Scalars['ID'];
+  reason?: Maybe<Scalars['String']>;
+};
+
 export enum ChallengeStatus {
   DRAFT = 'DRAFT',
   PROPOSED = 'PROPOSED',
@@ -76,78 +148,6 @@ export enum Role {
   MODERATOR = 'MODERATOR',
   ADMINISTRATOR = 'ADMINISTRATOR',
 }
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  /** Creates a new code golf Challenge */
-  createChallenge: CreateChallengeResult;
-  /** Executes a dry run of arbitrary code golf Challenge code */
-  testChallenge: Result;
-  /** Submits a solution to a published Challenege */
-  createSolution: CreateSolutionResult;
-  /** Executes a dry run of a solution */
-  testSolution: Result;
-  /** Upvote a proposed Challenge */
-  upvote: Scalars['Boolean'];
-  /** Downvote a proposed Challenge with reason */
-  downvote: Scalars['Boolean'];
-};
-
-export type MutationcreateChallengeArgs = {
-  title: Scalars['String'];
-  description: Scalars['String'];
-  tags?: Maybe<Array<Scalars['String']>>;
-  setupCode: Scalars['String'];
-  testCode: Scalars['String'];
-  solutionCode: Scalars['String'];
-};
-
-export type MutationtestChallengeArgs = {
-  setupCode: Scalars['String'];
-  testCode: Scalars['String'];
-  solutionCode: Scalars['String'];
-};
-
-export type MutationcreateSolutionArgs = {
-  challenge: Scalars['ID'];
-  solutionCode: Scalars['String'];
-};
-
-export type MutationtestSolutionArgs = {
-  challenge: Scalars['ID'];
-  solutionCode: Scalars['String'];
-};
-
-export type MutationupvoteArgs = {
-  challenge: Scalars['ID'];
-};
-
-export type MutationdownvoteArgs = {
-  challenge: Scalars['ID'];
-  reason?: Maybe<Scalars['String']>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  /** Get a user profile by ID */
-  getUser?: Maybe<User>;
-  /** Get the currently authenticated user's profile */
-  getOwnUser?: Maybe<User>;
-  /** Get a challenge by ID */
-  getChallenge?: Maybe<Challenge>;
-  /** Get list of published challenges */
-  getChallenges: Array<Challenge>;
-  /** Get list of proposed challenges */
-  getProposedChallenges: Array<Challenge>;
-};
-
-export type QuerygetUserArgs = {
-  id: Scalars['ID'];
-};
-
-export type QuerygetChallengeArgs = {
-  id: Scalars['ID'];
-};
 
 export type Result = {
   __typename?: 'Result';
@@ -290,36 +290,36 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  Date: ResolverTypeWrapper<Scalars['Date']>;
+  Query: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ChallengeStatus: ChallengeStatus;
   Challenge: ResolverTypeWrapper<Challenge>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   CreateChallengeResult: ResolverTypeWrapper<CreateChallengeResult>;
   Role: Role;
-  Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Query: ResolverTypeWrapper<{}>;
   Result: ResolverTypeWrapper<Result>;
   CreateSolutionResult: ResolverTypeWrapper<CreateSolutionResult>;
-  Date: ResolverTypeWrapper<Scalars['Date']>;
   Solution: ResolverTypeWrapper<Solution>;
   User: ResolverTypeWrapper<User>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Challenge: Challenge;
+  Date: Scalars['Date'];
+  Query: {};
   ID: Scalars['ID'];
+  Mutation: {};
   String: Scalars['String'];
+  Boolean: Scalars['Boolean'];
+  Challenge: Challenge;
   Int: Scalars['Int'];
   CreateChallengeResult: CreateChallengeResult;
-  Mutation: {};
-  Boolean: Scalars['Boolean'];
-  Query: {};
   Result: Result;
   CreateSolutionResult: CreateSolutionResult;
-  Date: Scalars['Date'];
   Solution: Solution;
   User: User;
 };
@@ -347,6 +347,88 @@ export type rateLimitDirectiveResolver<
   ContextType = MercuriusContext,
   Args = rateLimitDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export interface DateScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
+export type QueryResolvers<
+  ContextType = MercuriusContext,
+  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
+> = {
+  getChallenge?: Resolver<
+    Maybe<ResolversTypes['Challenge']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerygetChallengeArgs, 'id'>
+  >;
+  getChallenges?: Resolver<
+    Array<ResolversTypes['Challenge']>,
+    ParentType,
+    ContextType
+  >;
+  getProposedChallenges?: Resolver<
+    Array<ResolversTypes['Challenge']>,
+    ParentType,
+    ContextType
+  >;
+  getUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerygetUserArgs, 'id'>
+  >;
+  getOwnUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+};
+
+export type MutationResolvers<
+  ContextType = MercuriusContext,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
+> = {
+  testChallenge?: Resolver<
+    ResolversTypes['Result'],
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationtestChallengeArgs,
+      'setupCode' | 'testCode' | 'solutionCode'
+    >
+  >;
+  createChallenge?: Resolver<
+    ResolversTypes['CreateChallengeResult'],
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationcreateChallengeArgs,
+      'title' | 'description' | 'setupCode' | 'testCode' | 'solutionCode'
+    >
+  >;
+  createSolution?: Resolver<
+    ResolversTypes['CreateSolutionResult'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationcreateSolutionArgs, 'challenge' | 'solutionCode'>
+  >;
+  testSolution?: Resolver<
+    ResolversTypes['Result'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationtestSolutionArgs, 'challenge' | 'solutionCode'>
+  >;
+  upvote?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationupvoteArgs, 'challenge'>
+  >;
+  downvote?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationdownvoteArgs, 'challenge'>
+  >;
+};
 
 export type ChallengeResolvers<
   ContextType = MercuriusContext,
@@ -391,83 +473,6 @@ export type CreateChallengeResultResolvers<
   isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<
-  ContextType = MercuriusContext,
-  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
-> = {
-  createChallenge?: Resolver<
-    ResolversTypes['CreateChallengeResult'],
-    ParentType,
-    ContextType,
-    RequireFields<
-      MutationcreateChallengeArgs,
-      'title' | 'description' | 'setupCode' | 'testCode' | 'solutionCode'
-    >
-  >;
-  testChallenge?: Resolver<
-    ResolversTypes['Result'],
-    ParentType,
-    ContextType,
-    RequireFields<
-      MutationtestChallengeArgs,
-      'setupCode' | 'testCode' | 'solutionCode'
-    >
-  >;
-  createSolution?: Resolver<
-    ResolversTypes['CreateSolutionResult'],
-    ParentType,
-    ContextType,
-    RequireFields<MutationcreateSolutionArgs, 'challenge' | 'solutionCode'>
-  >;
-  testSolution?: Resolver<
-    ResolversTypes['Result'],
-    ParentType,
-    ContextType,
-    RequireFields<MutationtestSolutionArgs, 'challenge' | 'solutionCode'>
-  >;
-  upvote?: Resolver<
-    ResolversTypes['Boolean'],
-    ParentType,
-    ContextType,
-    RequireFields<MutationupvoteArgs, 'challenge'>
-  >;
-  downvote?: Resolver<
-    ResolversTypes['Boolean'],
-    ParentType,
-    ContextType,
-    RequireFields<MutationdownvoteArgs, 'challenge'>
-  >;
-};
-
-export type QueryResolvers<
-  ContextType = MercuriusContext,
-  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
-> = {
-  getUser?: Resolver<
-    Maybe<ResolversTypes['User']>,
-    ParentType,
-    ContextType,
-    RequireFields<QuerygetUserArgs, 'id'>
-  >;
-  getOwnUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  getChallenge?: Resolver<
-    Maybe<ResolversTypes['Challenge']>,
-    ParentType,
-    ContextType,
-    RequireFields<QuerygetChallengeArgs, 'id'>
-  >;
-  getChallenges?: Resolver<
-    Array<ResolversTypes['Challenge']>,
-    ParentType,
-    ContextType
-  >;
-  getProposedChallenges?: Resolver<
-    Array<ResolversTypes['Challenge']>,
-    ParentType,
-    ContextType
-  >;
-};
-
 export type ResultResolvers<
   ContextType = MercuriusContext,
   ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result'],
@@ -493,11 +498,6 @@ export type CreateSolutionResultResolvers<
   result?: Resolver<ResolversTypes['Result'], ParentType, ContextType>;
   isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
-
-export interface DateScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date';
-}
 
 export type SolutionResolvers<
   ContextType = MercuriusContext,
@@ -534,13 +534,13 @@ export type UserResolvers<
 };
 
 export type Resolvers<ContextType = MercuriusContext> = {
+  Date?: GraphQLScalarType;
+  Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   Challenge?: ChallengeResolvers<ContextType>;
   CreateChallengeResult?: CreateChallengeResultResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
   Result?: ResultResolvers<ContextType>;
   CreateSolutionResult?: CreateSolutionResultResolvers<ContextType>;
-  Date?: GraphQLScalarType;
   Solution?: SolutionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

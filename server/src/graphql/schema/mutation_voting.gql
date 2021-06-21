@@ -1,0 +1,20 @@
+extend type Mutation {
+  """
+  Upvote a proposed Challenge
+  """
+  upvote(
+    challenge: ID!
+  ): Boolean!
+    @auth(role: CREATOR)
+    @rateLimit(max: 3, window: "1m")
+
+  """
+  Downvote a proposed Challenge with reason
+  """
+  downvote(
+    challenge: ID!,
+    reason: String
+  ): Boolean!
+    @auth(role: CREATOR)
+    @rateLimit(max: 3, window: "1m")
+}
