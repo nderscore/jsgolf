@@ -8,6 +8,24 @@ CREATE TYPE "ChallengeStatus" AS ENUM ('DRAFT', 'PROPOSED', 'PUBLISHED', 'REJECT
 CREATE TYPE "VoteValue" AS ENUM ('UP', 'DOWN');
 
 -- CreateTable
+CREATE TABLE "Session" (
+    "id" TEXT NOT NULL,
+    "data" TEXT NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "RateLimit" (
+    "id" TEXT NOT NULL,
+    "timestamps" TIMESTAMP(3)[],
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "githubId" INTEGER NOT NULL,
@@ -22,13 +40,13 @@ CREATE TABLE "User" (
 CREATE TABLE "Challenge" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "published" TIMESTAMP(3),
     "authorId" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "tags" TEXT[],
     "setupCode" TEXT NOT NULL,
-    "testCode" TEXT[],
+    "testCode" TEXT NOT NULL,
     "status" "ChallengeStatus" NOT NULL,
     "rejectionReason" TEXT,
 
@@ -62,10 +80,7 @@ CREATE UNIQUE INDEX "Solution.challengeId_authorId_unique" ON "Solution"("challe
 CREATE UNIQUE INDEX "Vote.challengeId_userId_unique" ON "Vote"("challengeId", "userId");
 
 -- AddForeignKey
-ALTER TABLE "Vote" ADD FOREIGN KEY ("challengeId") REFERENCES "Challenge"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Vote" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Challenge" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Solution" ADD FOREIGN KEY ("challengeId") REFERENCES "Challenge"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -74,4 +89,7 @@ ALTER TABLE "Solution" ADD FOREIGN KEY ("challengeId") REFERENCES "Challenge"("i
 ALTER TABLE "Solution" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Challenge" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Vote" ADD FOREIGN KEY ("challengeId") REFERENCES "Challenge"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Vote" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
