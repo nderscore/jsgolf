@@ -3,6 +3,7 @@ import type { MercuriusLoaders } from 'mercurius';
 
 import { toGQLUser } from '../serializers/user';
 import { toGQLSolution } from '../serializers/solution';
+import { ChallengeStatus } from '../graphql';
 
 export const challenge: MercuriusLoaders = {
   Challenge: {
@@ -23,10 +24,14 @@ export const challenge: MercuriusLoaders = {
     },
 
     async upvotes(queries, { prisma }) {
-      const batch = queries.map(async ({ obj: { id } }) => {
+      const batch = queries.map(async ({ obj }) => {
+        if (obj.status !== ChallengeStatus.PROPOSED) {
+          return null;
+        }
+
         const count = await prisma.vote.count({
           where: {
-            challengeId: id,
+            challengeId: obj.id,
             value: VoteValue.UP,
           },
         });
@@ -38,10 +43,14 @@ export const challenge: MercuriusLoaders = {
     },
 
     async downvotes(queries, { prisma }) {
-      const batch = queries.map(async ({ obj: { id } }) => {
+      const batch = queries.map(async ({ obj }) => {
+        if (obj.status !== ChallengeStatus.PROPOSED) {
+          return null;
+        }
+
         const count = await prisma.vote.count({
           where: {
-            challengeId: id,
+            challengeId: obj.id,
             value: VoteValue.DOWN,
           },
         });
