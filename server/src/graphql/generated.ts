@@ -702,6 +702,25 @@ export type createSolutionMutation = { __typename?: 'Mutation' } & {
   };
 };
 
+export type upvoteMutationVariables = Exact<{
+  challenge: Scalars['ID'];
+}>;
+
+export type upvoteMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'upvote'
+>;
+
+export type downvoteMutationVariables = Exact<{
+  challenge: Scalars['ID'];
+  reason?: Maybe<Scalars['String']>;
+}>;
+
+export type downvoteMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'downvote'
+>;
+
 export type getChallengesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type getChallengesQuery = { __typename?: 'Query' } & {
@@ -1252,6 +1271,106 @@ export const createSolutionDocument = {
   createSolutionMutation,
   createSolutionMutationVariables
 >;
+export const upvoteDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'upvote' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'challenge' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'upvote' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'challenge' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'challenge' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<upvoteMutation, upvoteMutationVariables>;
+export const downvoteDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'downvote' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'challenge' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'reason' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'downvote' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'challenge' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'challenge' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'reason' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'reason' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<downvoteMutation, downvoteMutationVariables>;
 export const getChallengesDocument = {
   kind: 'Document',
   definitions: [

@@ -1,0 +1,17 @@
+mutation upvote(
+  $challenge: ID!
+) {
+  upvote(
+    challenge: $challenge
+  )
+}
+
+mutation downvote(
+  $challenge: ID!,
+  $reason: String
+) {
+  downvote(
+    challenge: $challenge,
+    reason: $reason
+  )
+}
