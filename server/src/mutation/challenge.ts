@@ -57,6 +57,14 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
         setupCode,
         testCode,
         status: ChallengeStatus.DRAFT,
+        solutions: {
+          create: {
+            authorId,
+            code: solutionCode,
+            size: 0,
+            timestamp: new Date(),
+          },
+        },
       },
     });
 
