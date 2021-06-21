@@ -119,7 +119,7 @@ export enum ChallengeStatus {
 export type Challenge = {
   __typename?: 'Challenge';
   id: Scalars['ID'];
-  created: Scalars['Date'];
+  updated: Scalars['Date'];
   published?: Maybe<Scalars['Date']>;
   title: Scalars['String'];
   description: Scalars['String'];
@@ -435,7 +435,7 @@ export type ChallengeResolvers<
   ParentType extends ResolversParentTypes['Challenge'] = ResolversParentTypes['Challenge'],
 > = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  created?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  updated?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   published?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -586,7 +586,7 @@ export interface Loaders<
 > {
   Challenge?: {
     id?: LoaderResolver<Scalars['ID'], Challenge, {}, TContext>;
-    created?: LoaderResolver<Scalars['Date'], Challenge, {}, TContext>;
+    updated?: LoaderResolver<Scalars['Date'], Challenge, {}, TContext>;
     published?: LoaderResolver<Maybe<Scalars['Date']>, Challenge, {}, TContext>;
     title?: LoaderResolver<Scalars['String'], Challenge, {}, TContext>;
     description?: LoaderResolver<Scalars['String'], Challenge, {}, TContext>;
@@ -740,7 +740,7 @@ export type getProposedChallengesQuery = { __typename?: 'Query' } & {
   getProposedChallenges: Array<
     { __typename?: 'Challenge' } & Pick<
       Challenge,
-      'id' | 'title' | 'created' | 'tags' | 'upvotes' | 'downvotes'
+      'id' | 'title' | 'updated' | 'tags' | 'upvotes' | 'downvotes'
     > & { author: { __typename?: 'User' } & Pick<User, 'name'> }
   >;
 };
@@ -755,7 +755,6 @@ export type getChallengeQuery = { __typename?: 'Query' } & {
       Challenge,
       | 'id'
       | 'title'
-      | 'created'
       | 'published'
       | 'status'
       | 'tags'
@@ -1427,7 +1426,7 @@ export const getProposedChallengesDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'updated' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'author' },
@@ -1490,7 +1489,6 @@ export const getChallengeDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'published' } },
                 {
                   kind: 'Field',

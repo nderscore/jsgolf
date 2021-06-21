@@ -6,7 +6,7 @@ import { toGQLResult } from './result';
 export const toGQLChallenge = (challenge: Challenge) => {
   return {
     id: challenge.id,
-    created: challenge.created,
+    updated: challenge.updated,
     published: challenge.published,
     title: challenge.title,
     description: challenge.description,

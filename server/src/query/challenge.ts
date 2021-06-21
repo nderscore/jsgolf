@@ -28,7 +28,7 @@ export const challenge: IResolvers['Query'] & QueryResolvers = {
   async getProposedChallenges(_root, _args, { prisma }, _info) {
     const results = await prisma.challenge.findMany({
       where: { status: ChallengeStatus.PROPOSED },
-      orderBy: { created: 'desc' },
+      orderBy: { updated: 'desc' },
     });
 
     return results.map(result => toGQLChallenge(result));

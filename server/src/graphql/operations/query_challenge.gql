@@ -12,7 +12,7 @@ query getProposedChallenges {
   getProposedChallenges {
     id
     title
-    created
+    updated
     author { name }
     tags
     upvotes
@@ -26,7 +26,6 @@ query getChallenge(
   getChallenge(id: $id) {
     id
     title
-    created
     published
     author {
       id

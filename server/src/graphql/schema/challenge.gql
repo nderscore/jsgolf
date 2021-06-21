@@ -8,7 +8,7 @@ enum ChallengeStatus {
 
 type Challenge {
   id: ID!
-  created: Date!
+  updated: Date!
   published: Date
   title: String!
   description: String!

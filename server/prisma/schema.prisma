@@ -48,7 +48,7 @@ enum ChallengeStatus {
 model Challenge {
   id              String          @id @default(uuid())
   title           String
-  created         DateTime        @default(now())
+  updated         DateTime        @default(now())
   published       DateTime?
   author          User            @relation(fields: [authorId], references: [id])
   authorId        String
