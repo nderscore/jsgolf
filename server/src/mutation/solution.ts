@@ -2,7 +2,11 @@ import type { IResolvers } from 'mercurius';
 import type { MutationResolvers } from '../graphql';
 import { ChallengeStatus } from '@prisma/client';
 
-import { getCodeSize, testCodeSizeConstraints } from '../constants/utils';
+import {
+  getCodeSize,
+  testCodeSizeConstraints,
+  getAuthenticatedUserIdOrFail,
+} from '../constants/utils';
 import { toGQLResult } from '../serializers/result';
 import { toGQLSolutionResult } from '../serializers/solution';
 
@@ -64,11 +68,7 @@ export const solution: IResolvers['Mutation'] & MutationResolvers = {
       return toGQLSolutionResult('Unexpected error');
     }
 
-    const authorId = auth?.userId;
-
-    if (!authorId) {
-      throw new Error('Missing auth.');
-    }
+    const authorId = getAuthenticatedUserIdOrFail(auth);
 
     const size = getCodeSize(solutionCode);
     const timestamp = new Date();

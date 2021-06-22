@@ -2,13 +2,11 @@ import type { IResolvers } from 'mercurius';
 import type { MutationResolvers } from '../graphql';
 import { ChallengeStatus, VoteValue } from '@prisma/client';
 
+import { getAuthenticatedUserIdOrFail } from '../constants/utils';
+
 export const voting: IResolvers['Mutation'] & MutationResolvers = {
   async upvote(_root, { challenge: challengeId }, { auth, prisma }, _info) {
-    const userId = auth?.userId;
-
-    if (!userId) {
-      throw new Error('Missing auth.');
-    }
+    const userId = getAuthenticatedUserIdOrFail(auth);
 
     const challenge = await prisma.challenge.findUnique({
       where: { id: challengeId },
@@ -45,11 +43,7 @@ export const voting: IResolvers['Mutation'] & MutationResolvers = {
     { auth, prisma },
     _info,
   ) {
-    const userId = auth?.userId;
-
-    if (!userId) {
-      throw new Error('Missing auth.');
-    }
+    const userId = getAuthenticatedUserIdOrFail(auth);
 
     const challenge = await prisma.challenge.findUnique({
       where: { id: challengeId },
