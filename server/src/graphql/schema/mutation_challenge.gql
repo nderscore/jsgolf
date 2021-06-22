@@ -8,7 +8,7 @@ extend type Mutation {
     solutionCode: String!
   ): Result!
     @auth(role: CREATOR)
-    @rateLimit(max: 5, window: "1m")
+    @rateLimit(max: 4, window: "1m")
 
   """
   Creates a new code golf Challenge
@@ -22,5 +22,55 @@ extend type Mutation {
     solutionCode: String!
   ): CreateChallengeResult!
     @auth(role: CREATOR)
+    @rateLimit(max: 2, window: "5m")
+
+  """
+  Modifies a draft code golf Challenge
+  """
+  editDraftChallenge(
+    id: ID!,
+    title: String!,
+    description: String!,
+    tags: [String!],
+    setupCode: String!,
+    testCode: String!,
+    solutionCode: String!
+  ): CreateChallengeResult!
+    @auth(role: CREATOR)
+    @rateLimit(max: 4, window: "1m")
+
+  """
+  Submits a draft Challenge publicly for voting
+  """
+  proposeChallenge(
+    id: ID!
+  ): Result!
+    @auth(role: CREATOR)
     @rateLimit(max: 1, window: "5m")
+
+  """
+  Delete a draft or rejected Challenge
+  """
+  deleteOwnChallenge(
+    id: ID!
+  ): Boolean!
+    @auth(role: CREATOR)
+    @rateLimit(max: 3, window: "1m")
+
+  """
+  Publishes a proposed Challenge
+  """
+  publishChallenge(
+    id: ID!
+  ): Boolean!
+    @auth(role: PUBLISHER)
+
+  """
+  Rejects a proposed Challenge
+  """
+  rejectChallenge(
+    id: ID!,
+    reason: String!
+  ): Boolean!
+    @auth(role: PUBLISHER)
 }

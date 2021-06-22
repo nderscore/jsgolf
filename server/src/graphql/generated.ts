@@ -64,6 +64,16 @@ export type Mutation = {
   testChallenge: Result;
   /** Creates a new code golf Challenge */
   createChallenge: CreateChallengeResult;
+  /** Modifies a draft code golf Challenge */
+  editDraftChallenge: CreateChallengeResult;
+  /** Submits a draft Challenge publicly for voting */
+  proposeChallenge: Result;
+  /** Delete a draft or rejected Challenge */
+  deleteOwnChallenge: Scalars['Boolean'];
+  /** Publishes a proposed Challenge */
+  publishChallenge: Scalars['Boolean'];
+  /** Rejects a proposed Challenge */
+  rejectChallenge: Scalars['Boolean'];
   /** Submits a solution to a published Challenege */
   createSolution: CreateSolutionResult;
   /** Executes a dry run of a solution */
@@ -87,6 +97,33 @@ export type MutationcreateChallengeArgs = {
   setupCode: Scalars['String'];
   testCode: Scalars['String'];
   solutionCode: Scalars['String'];
+};
+
+export type MutationeditDraftChallengeArgs = {
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  description: Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']>>;
+  setupCode: Scalars['String'];
+  testCode: Scalars['String'];
+  solutionCode: Scalars['String'];
+};
+
+export type MutationproposeChallengeArgs = {
+  id: Scalars['ID'];
+};
+
+export type MutationdeleteOwnChallengeArgs = {
+  id: Scalars['ID'];
+};
+
+export type MutationpublishChallengeArgs = {
+  id: Scalars['ID'];
+};
+
+export type MutationrejectChallengeArgs = {
+  id: Scalars['ID'];
+  reason: Scalars['String'];
 };
 
 export type MutationcreateSolutionArgs = {
@@ -404,6 +441,39 @@ export type MutationResolvers<
       'title' | 'description' | 'setupCode' | 'testCode' | 'solutionCode'
     >
   >;
+  editDraftChallenge?: Resolver<
+    ResolversTypes['CreateChallengeResult'],
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationeditDraftChallengeArgs,
+      'id' | 'title' | 'description' | 'setupCode' | 'testCode' | 'solutionCode'
+    >
+  >;
+  proposeChallenge?: Resolver<
+    ResolversTypes['Result'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationproposeChallengeArgs, 'id'>
+  >;
+  deleteOwnChallenge?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationdeleteOwnChallengeArgs, 'id'>
+  >;
+  publishChallenge?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationpublishChallengeArgs, 'id'>
+  >;
+  rejectChallenge?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationrejectChallengeArgs, 'id' | 'reason'>
+  >;
   createSolution?: Resolver<
     ResolversTypes['CreateSolutionResult'],
     ParentType,
@@ -680,6 +750,43 @@ export type createChallengeMutation = { __typename?: 'Mutation' } & {
     challenge?: Maybe<{ __typename?: 'Challenge' } & Pick<Challenge, 'id'>>;
   };
 };
+
+export type editDraftChallengeMutationVariables = Exact<{
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  description: Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  setupCode: Scalars['String'];
+  testCode: Scalars['String'];
+  solutionCode: Scalars['String'];
+}>;
+
+export type editDraftChallengeMutation = { __typename?: 'Mutation' } & {
+  editDraftChallenge: { __typename?: 'CreateChallengeResult' } & {
+    result: { __typename?: 'Result' } & Pick<Result, 'success' | 'errors'>;
+    challenge?: Maybe<{ __typename?: 'Challenge' } & Pick<Challenge, 'id'>>;
+  };
+};
+
+export type proposeChallengeMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type proposeChallengeMutation = { __typename?: 'Mutation' } & {
+  proposeChallenge: { __typename?: 'Result' } & Pick<
+    Result,
+    'success' | 'errors'
+  >;
+};
+
+export type deleteOwnChallengeMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type deleteOwnChallengeMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'deleteOwnChallenge'
+>;
 
 export type testSolutionMutationVariables = Exact<{
   challenge: Scalars['ID'];
@@ -1096,6 +1203,303 @@ export const createChallengeDocument = {
 } as unknown as DocumentNode<
   createChallengeMutation,
   createChallengeMutationVariables
+>;
+export const editDraftChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'editDraftChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'title' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'description' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'tags' } },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'String' },
+              },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'setupCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'testCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'solutionCode' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'editDraftChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'title' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'title' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'description' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'description' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'tags' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'tags' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'setupCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'setupCode' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'testCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'testCode' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'solutionCode' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'solutionCode' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'result' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'success' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'errors' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'challenge' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  editDraftChallengeMutation,
+  editDraftChallengeMutationVariables
+>;
+export const proposeChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'proposeChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposeChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'success' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'errors' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  proposeChallengeMutation,
+  proposeChallengeMutationVariables
+>;
+export const deleteOwnChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'deleteOwnChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deleteOwnChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  deleteOwnChallengeMutation,
+  deleteOwnChallengeMutationVariables
 >;
 export const testSolutionDocument = {
   kind: 'Document',
