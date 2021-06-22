@@ -25,7 +25,10 @@ export const user: MercuriusLoaders = {
     async solutions(queries, { auth, prisma }) {
       const batch = queries.map(async ({ obj: { id } }) => {
         const results = await prisma.solution.findMany({
-          where: { authorId: id },
+          where: {
+            authorId: id,
+            size: { gt: 0 }, // ignore draft solutions
+          },
           orderBy: { timestamp: 'desc' },
         });
 
