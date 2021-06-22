@@ -170,21 +170,20 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
       return toGQLResult(result);
     }
 
-    await prisma.solution.delete({
-      where: {
-        challengeId_authorId: {
-          challengeId,
-          authorId,
-        },
-      },
-    });
-
     await prisma.challenge.update({
       where: {
         id: challengeId,
       },
       data: {
         status: ChallengeStatus.PROPOSED,
+        solutions: {
+          delete: {
+            challengeId_authorId: {
+              challengeId,
+              authorId,
+            },
+          },
+        },
       },
     });
 
