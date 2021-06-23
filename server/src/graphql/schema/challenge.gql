@@ -17,6 +17,7 @@ type Challenge {
   status: ChallengeStatus!
   setupCode: String!
   testCode: String!
+  draftSolution: String
   tags: [String!]!
   solutions: [Solution!]
   upvotes: Int

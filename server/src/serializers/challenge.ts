@@ -14,6 +14,7 @@ export const toGQLChallenge = (challenge: Challenge) => {
     status: GQLChallengeStatus[challenge.status],
     setupCode: challenge.setupCode,
     testCode: challenge.testCode,
+    draftSolution: challenge.draftSolution, // hide from non-author? (FIXME)
     tags: challenge.tags,
     rejectionReason: challenge.rejectionReason,
   };

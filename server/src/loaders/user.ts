@@ -32,9 +32,6 @@ export const user: MercuriusLoaders = {
             where: { id },
           })
           .solutions({
-            where: {
-              size: { gt: 0 }, // ignore draft solutions (FIXME)
-            },
             orderBy: { timestamp: 'desc' },
           });
 

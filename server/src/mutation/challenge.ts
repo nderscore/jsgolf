@@ -44,15 +44,8 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
         tags: tags || [],
         setupCode,
         testCode,
+        draftSolution: solutionCode,
         status: ChallengeStatus.DRAFT,
-        solutions: {
-          create: {
-            authorId,
-            code: solutionCode,
-            size: 0,
-            timestamp: new Date(),
-          },
-        },
       },
     });
 
@@ -99,22 +92,8 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
         tags: tags || [],
         setupCode,
         testCode,
+        draftSolution: solutionCode,
         status: ChallengeStatus.DRAFT,
-        solutions: {
-          update: {
-            where: {
-              challengeId_authorId: {
-                challengeId,
-                authorId,
-              },
-            },
-            data: {
-              code: solutionCode,
-              size: 0,
-              timestamp: new Date(),
-            },
-          },
-        },
       },
     });
 
@@ -176,14 +155,7 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
       },
       data: {
         status: ChallengeStatus.PROPOSED,
-        solutions: {
-          delete: {
-            challengeId_authorId: {
-              challengeId,
-              authorId,
-            },
-          },
-        },
+        draftSolution: null,
       },
     });
 

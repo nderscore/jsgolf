@@ -57,6 +57,7 @@ model Challenge {
   tags            String[]
   setupCode       String
   testCode        String
+  draftSolution   String?
   status          ChallengeStatus
   solutions       Solution[]
   votes           Vote[]

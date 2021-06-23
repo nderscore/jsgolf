@@ -47,6 +47,7 @@ CREATE TABLE "Challenge" (
     "tags" TEXT[],
     "setupCode" TEXT NOT NULL,
     "testCode" TEXT NOT NULL,
+    "draftSolution" TEXT,
     "status" "ChallengeStatus" NOT NULL,
     "rejectionReason" TEXT,
 

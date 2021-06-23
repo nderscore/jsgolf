@@ -165,6 +165,7 @@ export type Challenge = {
   status: ChallengeStatus;
   setupCode: Scalars['String'];
   testCode: Scalars['String'];
+  draftSolution?: Maybe<Scalars['String']>;
   tags: Array<Scalars['String']>;
   solutions?: Maybe<Array<Solution>>;
   upvotes?: Maybe<Scalars['Int']>;
@@ -514,6 +515,11 @@ export type ChallengeResolvers<
   status?: Resolver<ResolversTypes['ChallengeStatus'], ParentType, ContextType>;
   setupCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   testCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  draftSolution?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   tags?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   solutions?: Resolver<
     Maybe<Array<ResolversTypes['Solution']>>,
@@ -665,6 +671,12 @@ export interface Loaders<
     status?: LoaderResolver<ChallengeStatus, Challenge, {}, TContext>;
     setupCode?: LoaderResolver<Scalars['String'], Challenge, {}, TContext>;
     testCode?: LoaderResolver<Scalars['String'], Challenge, {}, TContext>;
+    draftSolution?: LoaderResolver<
+      Maybe<Scalars['String']>,
+      Challenge,
+      {},
+      TContext
+    >;
     tags?: LoaderResolver<Array<Scalars['String']>, Challenge, {}, TContext>;
     solutions?: LoaderResolver<Maybe<Array<Solution>>, Challenge, {}, TContext>;
     upvotes?: LoaderResolver<Maybe<Scalars['Int']>, Challenge, {}, TContext>;
