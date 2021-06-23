@@ -8,10 +8,12 @@ import { ChallengeStatus } from '../graphql';
 export const challenge: MercuriusLoaders = {
   Challenge: {
     async author(queries, { prisma }) {
-      const batch = queries.map(async ({ obj: { authorId } }) => {
-        const result = await prisma.user.findUnique({
-          where: { id: authorId },
-        });
+      const batch = queries.map(async ({ obj: { id } }) => {
+        const result = await prisma.challenge
+          .findUnique({
+            where: { id },
+          })
+          .author();
 
         if (!result) {
           throw new Error('User not found.');
@@ -63,10 +65,13 @@ export const challenge: MercuriusLoaders = {
 
     async solutions(queries, { auth, prisma }) {
       const batch = queries.map(async ({ obj: { id } }) => {
-        const results = await prisma.solution.findMany({
-          where: { challengeId: id },
-          orderBy: [{ size: 'desc' }, { timestamp: 'desc' }],
-        });
+        const results = await prisma.challenge
+          .findUnique({
+            where: { id },
+          })
+          .solutions({
+            orderBy: [{ size: 'desc' }, { timestamp: 'desc' }],
+          });
 
         return results.map(result => toGQLSolution(result, auth));
       });

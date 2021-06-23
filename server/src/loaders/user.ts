@@ -8,13 +8,16 @@ export const user: MercuriusLoaders = {
   User: {
     async challenges(queries, { prisma }) {
       const batch = queries.map(async ({ obj: { id } }) => {
-        const results = await prisma.challenge.findMany({
-          where: {
-            authorId: id,
-            status: ChallengeStatus.PUBLISHED,
-          },
-          orderBy: { published: 'desc' },
-        });
+        const results = await prisma.user
+          .findUnique({
+            where: { id },
+          })
+          .challenges({
+            where: {
+              status: ChallengeStatus.PUBLISHED,
+            },
+            orderBy: { published: 'desc' },
+          });
 
         return results.map(result => toGQLChallenge(result));
       });
@@ -24,13 +27,16 @@ export const user: MercuriusLoaders = {
 
     async solutions(queries, { auth, prisma }) {
       const batch = queries.map(async ({ obj: { id } }) => {
-        const results = await prisma.solution.findMany({
-          where: {
-            authorId: id,
-            size: { gt: 0 }, // ignore draft solutions
-          },
-          orderBy: { timestamp: 'desc' },
-        });
+        const results = await prisma.user
+          .findUnique({
+            where: { id },
+          })
+          .solutions({
+            where: {
+              size: { gt: 0 }, // ignore draft solutions (FIXME)
+            },
+            orderBy: { timestamp: 'desc' },
+          });
 
         return results.map(result => toGQLSolution(result, auth));
       });
