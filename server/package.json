@@ -7,7 +7,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "tsc --build",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "ts-node-dev --ignore-watch '.*\\.json' --exit-child src/index.ts"
   },
   "prisma": {
     "schema": "./prisma/schema.prisma"
