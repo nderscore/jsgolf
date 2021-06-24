@@ -800,6 +800,25 @@ export type deleteOwnChallengeMutation = { __typename?: 'Mutation' } & Pick<
   'deleteOwnChallenge'
 >;
 
+export type publishChallengeMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type publishChallengeMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'publishChallenge'
+>;
+
+export type rejectChallengeMutationVariables = Exact<{
+  id: Scalars['ID'];
+  reason: Scalars['String'];
+}>;
+
+export type rejectChallengeMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'rejectChallenge'
+>;
+
 export type testSolutionMutationVariables = Exact<{
   challenge: Scalars['ID'];
   solutionCode: Scalars['String'];
@@ -1512,6 +1531,112 @@ export const deleteOwnChallengeDocument = {
 } as unknown as DocumentNode<
   deleteOwnChallengeMutation,
   deleteOwnChallengeMutationVariables
+>;
+export const publishChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'publishChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'publishChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  publishChallengeMutation,
+  publishChallengeMutationVariables
+>;
+export const rejectChallengeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'rejectChallenge' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'reason' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'rejectChallenge' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'reason' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'reason' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  rejectChallengeMutation,
+  rejectChallengeMutationVariables
 >;
 export const testSolutionDocument = {
   kind: 'Document',

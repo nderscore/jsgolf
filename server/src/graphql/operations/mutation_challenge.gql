@@ -85,3 +85,21 @@ mutation deleteOwnChallenge(
     id: $id
   )
 }
+
+mutation publishChallenge(
+  $id: ID!
+) {
+  publishChallenge(
+    id: $id
+  )
+}
+
+mutation rejectChallenge(
+  $id: ID!,
+  $reason: String!
+) {
+  rejectChallenge(
+    id: $id,
+    reason: $reason
+  )
+}

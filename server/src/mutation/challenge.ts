@@ -122,25 +122,11 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
       throw new Error('Invalid challenge');
     }
 
-    const solution = await prisma.solution.findUnique({
-      where: {
-        challengeId_authorId: {
-          challengeId,
-          authorId,
-        },
-      },
-    });
-
-    if (!solution) {
-      throw new Error('Unexpected error.');
-    }
-
-    const { setupCode, testCode } = challenge;
-    const { code: solutionCode } = solution;
+    const { setupCode, testCode, draftSolution: solutionCode } = challenge;
 
     let result;
     try {
-      result = await runTest(setupCode, testCode, solutionCode);
+      result = await runTest(setupCode, testCode, solutionCode as string);
     } catch (e) {
       throw new Error('Unexpected Error');
     }
@@ -193,6 +179,56 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
       },
       data: {
         status: ChallengeStatus.DELETED,
+      },
+    });
+
+    return true;
+  },
+
+  async publishChallenge(_root, { id: challengeId }, { prisma }, _info) {
+    const challenge = await prisma.challenge.findUnique({
+      where: { id: challengeId },
+    });
+
+    if (!challenge || challenge.status !== ChallengeStatus.PROPOSED) {
+      throw new Error('Invalid challenge');
+    }
+
+    await prisma.challenge.update({
+      where: {
+        id: challengeId,
+      },
+      data: {
+        published: new Date(),
+        status: ChallengeStatus.PUBLISHED,
+        votes: {
+          deleteMany: {},
+        },
+      },
+    });
+
+    return true;
+  },
+
+  async rejectChallenge(_root, { id: challengeId, reason }, { prisma }, _info) {
+    const challenge = await prisma.challenge.findUnique({
+      where: { id: challengeId },
+    });
+
+    if (!challenge || challenge.status !== ChallengeStatus.PROPOSED) {
+      throw new Error('Invalid challenge');
+    }
+
+    await prisma.challenge.update({
+      where: {
+        id: challengeId,
+      },
+      data: {
+        status: ChallengeStatus.REJECTED,
+        rejectionReason: reason,
+        votes: {
+          deleteMany: {},
+        },
       },
     });
 
