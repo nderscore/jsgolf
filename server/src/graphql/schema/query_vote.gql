@@ -1,0 +1,9 @@
+extend type Query {
+  """
+  Get all votes for a proposed challenge
+  """
+  getVotes(
+    id: ID!
+  ): [Vote!]!
+    @auth(role: PUBLISHER)
+}

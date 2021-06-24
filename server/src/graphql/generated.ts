@@ -48,6 +48,8 @@ export type Query = {
   getUser?: Maybe<User>;
   /** Get the currently authenticated user's profile */
   getOwnUser?: Maybe<User>;
+  /** Get all votes for a proposed challenge */
+  getVotes: Array<Vote>;
 };
 
 export type QuerygetChallengeArgs = {
@@ -55,6 +57,10 @@ export type QuerygetChallengeArgs = {
 };
 
 export type QuerygetUserArgs = {
+  id: Scalars['ID'];
+};
+
+export type QuerygetVotesArgs = {
   id: Scalars['ID'];
 };
 
@@ -219,6 +225,19 @@ export type User = {
   solutions: Array<Solution>;
 };
 
+export enum VoteValue {
+  UP = 'UP',
+  DOWN = 'DOWN',
+}
+
+export type Vote = {
+  __typename?: 'Vote';
+  userId: Scalars['ID'];
+  user: User;
+  value: VoteValue;
+  reason?: Maybe<Scalars['String']>;
+};
+
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
@@ -343,6 +362,8 @@ export type ResolversTypes = {
   CreateSolutionResult: ResolverTypeWrapper<CreateSolutionResult>;
   Solution: ResolverTypeWrapper<Solution>;
   User: ResolverTypeWrapper<User>;
+  VoteValue: VoteValue;
+  Vote: ResolverTypeWrapper<Vote>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -360,6 +381,7 @@ export type ResolversParentTypes = {
   CreateSolutionResult: CreateSolutionResult;
   Solution: Solution;
   User: User;
+  Vote: Vote;
 };
 
 export type authDirectiveArgs = { role?: Maybe<Role> };
@@ -418,6 +440,12 @@ export type QueryResolvers<
     RequireFields<QuerygetUserArgs, 'id'>
   >;
   getOwnUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  getVotes?: Resolver<
+    Array<ResolversTypes['Vote']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerygetVotesArgs, 'id'>
+  >;
 };
 
 export type MutationResolvers<
@@ -609,6 +637,17 @@ export type UserResolvers<
   isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type VoteResolvers<
+  ContextType = MercuriusContext,
+  ParentType extends ResolversParentTypes['Vote'] = ResolversParentTypes['Vote'],
+> = {
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['VoteValue'], ParentType, ContextType>;
+  reason?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = MercuriusContext> = {
   Date?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
@@ -619,6 +658,7 @@ export type Resolvers<ContextType = MercuriusContext> = {
   CreateSolutionResult?: CreateSolutionResultResolvers<ContextType>;
   Solution?: SolutionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  Vote?: VoteResolvers<ContextType>;
 };
 
 /**
@@ -735,6 +775,13 @@ export interface Loaders<
     name?: LoaderResolver<Scalars['String'], User, {}, TContext>;
     challenges?: LoaderResolver<Array<Challenge>, User, {}, TContext>;
     solutions?: LoaderResolver<Array<Solution>, User, {}, TContext>;
+  };
+
+  Vote?: {
+    userId?: LoaderResolver<Scalars['ID'], Vote, {}, TContext>;
+    user?: LoaderResolver<User, Vote, {}, TContext>;
+    value?: LoaderResolver<VoteValue, Vote, {}, TContext>;
+    reason?: LoaderResolver<Maybe<Scalars['String']>, Vote, {}, TContext>;
   };
 }
 export type testChallengeMutationVariables = Exact<{
@@ -942,6 +989,18 @@ export type getUserProfileQuery = { __typename?: 'Query' } & {
               >;
             }
         >;
+      }
+  >;
+};
+
+export type getVotesQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type getVotesQuery = { __typename?: 'Query' } & {
+  getVotes: Array<
+    { __typename?: 'Vote' } & Pick<Vote, 'value' | 'reason'> & {
+        user: { __typename?: 'User' } & Pick<User, 'id' | 'githubId' | 'name'>;
       }
   >;
 };
@@ -2201,6 +2260,67 @@ export const getUserProfileDocument = {
     },
   ],
 } as unknown as DocumentNode<getUserProfileQuery, getUserProfileQueryVariables>;
+export const getVotesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getVotes' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getVotes' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'user' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'githubId' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'value' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reason' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<getVotesQuery, getVotesQueryVariables>;
 declare module 'mercurius' {
   interface IResolvers
     extends Resolvers<import('mercurius').MercuriusContext> {}

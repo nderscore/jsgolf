@@ -1,0 +1,11 @@
+enum VoteValue {
+  UP
+  DOWN
+}
+
+type Vote {
+  userId: ID!
+  user: User!
+  value: VoteValue!
+  reason: String
+}

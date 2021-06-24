@@ -7,7 +7,9 @@
   "extend type Mutation {\n  \"\"\"\n  Upvote a proposed Challenge\n  \"\"\"\n  upvote(\n    challenge: ID!\n  ): Boolean!\n    @auth(role: CREATOR)\n    @rateLimit(max: 3, window: \"1m\")\n\n  \"\"\"\n  Downvote a proposed Challenge with reason\n  \"\"\"\n  downvote(\n    challenge: ID!,\n    reason: String\n  ): Boolean!\n    @auth(role: CREATOR)\n    @rateLimit(max: 3, window: \"1m\")\n}",
   "extend type Query {\n  \"\"\"\n  Get a challenge by ID\n  \"\"\"\n  getChallenge(\n    id: ID!\n  ): Challenge\n\n  \"\"\"\n  Get list of published challenges\n  \"\"\"\n  getChallenges: [Challenge!]!\n\n  \"\"\"\n  Get list of proposed challenges\n  \"\"\"\n  getProposedChallenges: [Challenge!]!\n}",
   "extend type Query {\n  \"\"\"\n  Get a user profile by ID\n  \"\"\"\n  getUser(\n    id: ID!\n  ): User\n\n  \"\"\"\n  Get the currently authenticated user's profile\n  \"\"\"\n  getOwnUser: User\n    @auth\n}",
+  "extend type Query {\n  \"\"\"\n  Get all votes for a proposed challenge\n  \"\"\"\n  getVotes(\n    id: ID!\n  ): [Vote!]!\n    @auth(role: PUBLISHER)\n}",
   "type Result {\n  success: Boolean!\n  errors: [String]\n}\n\ntype CreateSolutionResult {\n  solution: Solution\n  result: Result!\n}",
   "type Solution {\n  authorId: ID!\n  author: User!\n  timestamp: Date!\n  size: Int!\n  code: String\n  challengeId: ID!\n  challenge: Challenge!\n}",
-  "type User {\n  id: ID!\n  githubId: Int!\n  name: String!\n  challenges: [Challenge!]!\n  solutions: [Solution!]!\n}"
+  "type User {\n  id: ID!\n  githubId: Int!\n  name: String!\n  challenges: [Challenge!]!\n  solutions: [Solution!]!\n}",
+  "enum VoteValue {\n  UP\n  DOWN\n}\n\ntype Vote {\n  userId: ID!\n  user: User!\n  value: VoteValue!\n  reason: String\n}"
 ]

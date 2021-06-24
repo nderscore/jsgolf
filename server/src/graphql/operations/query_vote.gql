@@ -1,0 +1,15 @@
+query getVotes(
+  $id: ID!
+) {
+  getVotes(
+    id: $id
+  ) {
+    user {
+      id
+      githubId
+      name
+    }
+    value
+    reason
+  }
+}

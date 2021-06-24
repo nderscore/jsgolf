@@ -4,7 +4,7 @@ import { ChallengeStatus, VoteValue } from '@prisma/client';
 
 import { getAuthenticatedUserIdOrFail } from '../constants/utils';
 
-export const voting: IResolvers['Mutation'] & MutationResolvers = {
+export const vote: IResolvers['Mutation'] & MutationResolvers = {
   async upvote(_root, { challenge: challengeId }, { auth, prisma }, _info) {
     const userId = getAuthenticatedUserIdOrFail(auth);
 
