@@ -5,10 +5,16 @@
     "module": "ESNext",
     "outDir": "dist",
     "rootDir": "src",
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
   },
   "include": ["src"],
-  "references": [{
-    "path": "../server"
-  }]
+  "references": [
+    {
+      "path": "../server"
+    }
+  ]
 }
