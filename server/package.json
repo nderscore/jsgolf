@@ -15,7 +15,6 @@
   "dependencies": {
     "@graphql-tools/schema": "^7.1.5",
     "@graphql-tools/utils": "^7.10.0",
-    "@jsgolf/testrunner": "0.0.0",
     "@mgcrea/fastify-session": "^0.14.1",
     "@prisma/client": "^2.25.0",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
