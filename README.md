@@ -38,6 +38,14 @@ Source code for js.golf, a Javascript code golf competition website.
   yarn server dev
   ```
 
+* Copy `client/example.env` to `client/.env` and update according to your local configuration.
+
+* Launch snowpack dev server:
+
+  ```shell
+  yarn client dev
+  ```
+
 ## Dev Tools
 
 * Altair GraphQL playground: `http://localhost:3000/altair`
