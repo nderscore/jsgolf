@@ -9,13 +9,17 @@ module.exports = {
   },
   workspaceRoot: '../',
   alias: {
-    '~jsgolf': './src',
+    '~': './src',
   },
   mount: {
     public: { static: true, url: '/' },
     src: { url: '/dist' },
   },
-  plugins: [],
+  plugins: [
+    ['@snowpack/plugin-react-refresh'],
+    ['@snowpack/plugin-dotenv'],
+    ['@snowpack/plugin-typescript'],
+  ],
   routes: [
     { dest: apiProxy, src: '/(graphql|login|logout|altair).*' },
     { dest: '/index.html', match: 'routes', src: '.*' },
