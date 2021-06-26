@@ -38,22 +38,27 @@ export const Flex = styled('div', {
     },
 
     gap: {
-      none: {
+      0: {
         [_notFirstChild]: {
           $$flexGap: '0',
         },
       },
-      thin: {
+      1: {
+        [_notFirstChild]: {
+          $$flexGap: '$space$1',
+        },
+      },
+      2: {
         [_notFirstChild]: {
           $$flexGap: '$space$2',
         },
       },
-      normal: {
+      3: {
         [_notFirstChild]: {
           $$flexGap: '$space$3',
         },
       },
-      thick: {
+      4: {
         [_notFirstChild]: {
           $$flexGap: '$space$4',
         },
