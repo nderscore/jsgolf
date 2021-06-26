@@ -83,6 +83,7 @@ export const setupGraphQL = (app: FastifyInstance) => {
     context: buildContext,
     queryDepth: config.DEV ? 7 : 3,
     validationRules,
+    persistedQueryProvider: mercurius.persistedQueryDefaults.automatic(5000),
     schemaTransforms: [
       addRateLimitDirectiveToSchema(
         getGraphQLRateLimiter({
