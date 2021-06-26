@@ -11,6 +11,13 @@ module.exports = {
   alias: {
     '~': './src',
   },
+  optimize: {
+    bundle: true,
+    splitting: true,
+    treeshake: true,
+    minify: true,
+    target: 'es2020',
+  },
   mount: {
     public: { static: true, url: '/' },
     src: { url: '/dist' },
