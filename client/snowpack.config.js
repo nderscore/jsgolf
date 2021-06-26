@@ -12,6 +12,7 @@ module.exports = {
     '~': './src',
   },
   optimize: {
+    entrypoints: ['./public/index.html'],
     bundle: true,
     splitting: true,
     treeshake: true,
@@ -20,7 +21,7 @@ module.exports = {
   },
   mount: {
     public: { static: true, url: '/' },
-    src: { url: '/dist' },
+    src: { url: '/' },
   },
   plugins: [
     ['@snowpack/plugin-react-refresh'],
