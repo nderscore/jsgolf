@@ -16,7 +16,7 @@ export const Flex = styled('div', {
 
   defaultVariants: {
     direction: 'row',
-    gap: 'none',
+    gap: '0',
   },
 
   variants: {
