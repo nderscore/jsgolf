@@ -7,7 +7,7 @@ import { Box } from '~/components/Box';
 export const Footer: FC = () => {
   return (
     <Box
-      as="nav"
+      as="footer"
       css={{
         backgroundColor: '$bgSecondary',
         boxShadow: '0 -1px 0 0 $colors$borderPrimary',

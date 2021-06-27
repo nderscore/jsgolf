@@ -4,13 +4,15 @@ import { Container } from '~/components/Container';
 import { Flex } from '~/components/Flex';
 import { Box } from '~/components/Box';
 import { Image } from '~/components/Image';
-
+import { Link } from '~/components/Link';
+import { Navigation } from '~/components/Navigation';
+import { paths } from '~/router/paths';
 import logo from '~public/images/logo.svg';
 
 export const Header: FC = () => {
   return (
     <Box
-      as="nav"
+      as="header"
       css={{
         backgroundColor: '$bgContrast',
         color: '$textContrast',
@@ -25,16 +27,18 @@ export const Header: FC = () => {
           css={{ alignItems: 'center', justifyContent: 'space-between' }}
         >
           <Box>
-            <Image
-              src={logo}
-              alt="js.golf"
-              css={{
-                height: '$5',
-                width: '$5',
-              }}
-            />
+            <Link color="contrast" to={paths.home}>
+              <Image
+                src={logo}
+                alt="js.golf"
+                css={{
+                  height: '$5',
+                  width: '$5',
+                }}
+              />
+            </Link>
           </Box>
-          <Box>Navigation Here</Box>
+          <Navigation />
         </Flex>
       </Container>
     </Box>

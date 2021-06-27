@@ -108,6 +108,11 @@ const stitches = createCss({
       textPrimary: '$manatee000',
       textContrast: '$manatee1100',
 
+      textLinkPrimary: '$blueviolet400',
+      textLinkPrimaryHover: '$blueviolet500',
+      textLinkContrast: '$blueviolet900',
+      textLinkContrastHover: '$blueviolet1100',
+
       borderPrimary: '$manatee1000',
       borderSecondary: '$manatee900',
       borderTertiary: '$manatee800',
