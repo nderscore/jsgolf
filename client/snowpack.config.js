@@ -10,6 +10,7 @@ module.exports = {
   workspaceRoot: '../',
   alias: {
     '~': './src',
+    '~public': './public',
   },
   optimize: {
     entrypoints: ['./public/index.html'],

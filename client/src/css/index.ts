@@ -70,18 +70,18 @@ const stitches = createCss({
       manatee1000: '#c9c9cf',
       manatee1100: '#dcdce0',
 
-      slate000: '#35151c',
-      slate100: '#4c1f29',
-      slate200: '#632a35',
-      slate300: '#7b3642',
-      slate400: '#93434f',
-      slate500: '#ab525c',
-      slate600: '#c26169',
-      slate700: '#d67478',
-      slate800: '#e38b8b',
-      slate900: '#e9a4a1',
-      slate1000: '#eebdb9',
-      slate1100: '#f4d6d2',
+      brownred000: '#35151c',
+      brownred100: '#4c1f29',
+      brownred200: '#632a35',
+      brownred300: '#7b3642',
+      brownred400: '#93434f',
+      brownred500: '#ab525c',
+      brownred600: '#c26169',
+      brownred700: '#d67478',
+      brownred800: '#e38b8b',
+      brownred900: '#e9a4a1',
+      brownred1000: '#eebdb9',
+      brownred1100: '#f4d6d2',
 
       yelloworange000: '#2d1c00',
       yelloworange100: '#402902',
@@ -100,9 +100,18 @@ const stitches = createCss({
       white: '#ffffff',
 
       // add base theme pallete (FIXME)
-      bg0: '$white',
+      bgPrimary: '$white',
+      bgSecondary: '$manatee1100',
+      bgTertiary: '$manatee1000',
+      bgContrast: '$manatee100',
 
-      fg0: '$slate000',
+      textPrimary: '$manatee000',
+      textContrast: '$manatee1100',
+
+      borderPrimary: '$manatee1000',
+      borderSecondary: '$manatee900',
+      borderTertiary: '$manatee800',
+      borderContrast: '$manatee700',
     },
     fonts: {
       body: '-apple-system, system-ui, sans-serif',
@@ -122,21 +131,21 @@ const stitches = createCss({
     },
     space: {
       0: '0',
-      1: '4px',
-      2: '8px',
-      3: '16px',
-      4: '32px',
+      1: '8px',
+      2: '16px',
+      3: '32px',
+      4: '48px',
     },
     fontSizes: {
       1: '12px',
-      2: '13px',
-      3: '15px',
-      4: '17px',
-      5: '19px',
-      6: '21px',
-      7: '27px',
-      8: '35px',
-      9: '59px',
+      2: '14px',
+      3: '16px',
+      4: '18px',
+      5: '21px',
+      6: '24px',
+      7: '30px',
+      8: '36px',
+      9: '48px',
     },
     radii: {
       1: '3px',
@@ -238,6 +247,7 @@ const stitches = createCss({
       config =>
       (
         value:
+          | 'auto'
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
@@ -250,6 +260,7 @@ const stitches = createCss({
       config =>
       (
         value:
+          | 'auto'
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
@@ -259,6 +270,7 @@ const stitches = createCss({
       config =>
       (
         value:
+          | 'auto'
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
@@ -268,6 +280,7 @@ const stitches = createCss({
       config =>
       (
         value:
+          | 'auto'
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
@@ -277,6 +290,7 @@ const stitches = createCss({
       config =>
       (
         value:
+          | 'auto'
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
@@ -286,6 +300,7 @@ const stitches = createCss({
       config =>
       (
         value:
+          | 'auto'
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
@@ -296,6 +311,7 @@ const stitches = createCss({
       config =>
       (
         value:
+          | 'auto'
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
