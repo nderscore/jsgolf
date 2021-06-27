@@ -8,7 +8,6 @@ import {
 
 const StyledLink = styled('a', {
   textDecoration: 'none',
-  fontWeight: 'bold',
   '@hover': {
     '&:hover': {
       textDecoration: 'underline',

@@ -23,7 +23,7 @@ export const Navigation: FC = () => {
       </Link>
       {isAuthenticated && (
         <>
-          <Link color="contrast" external to={paths.sandbox}>
+          <Link color="contrast" to={paths.sandbox}>
             Sandbox
           </Link>
           <Link color="contrast" external to={paths.logout}>
@@ -42,7 +42,7 @@ export const Navigation: FC = () => {
         </>
       )}
       {isUnauthenticated && (
-        <Link color="contrast" to={paths.login}>
+        <Link color="contrast" external to={paths.login}>
           Log in
         </Link>
       )}

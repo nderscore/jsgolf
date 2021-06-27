@@ -9,7 +9,7 @@ export const globalStyles = globalCss({
     margin: 0,
     height: '100%',
     fontFamily: '$body',
-    fontSize: '$4',
+    fontSize: '$3',
     backgroundColor: '$bgBase',
     color: '$textBase',
   },
