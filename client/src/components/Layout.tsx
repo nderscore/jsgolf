@@ -9,7 +9,9 @@ export const Layout: FC = ({ children }) => {
   return (
     <Flex direction="column" gap="2" css={{ height: '100%' }}>
       <Header />
-      <Box css={{ flexGrow: 1 }}>{children}</Box>
+      <Box as="main" css={{ flexGrow: 1 }}>
+        {children}
+      </Box>
       <Footer />
     </Flex>
   );
