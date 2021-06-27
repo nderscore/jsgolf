@@ -5,8 +5,13 @@ import { ChallengeStatus, VoteValue } from '@prisma/client';
 import { getAuthenticatedUserIdOrFail } from '../constants/utils';
 
 export const vote: IResolvers['Mutation'] & MutationResolvers = {
-  async upvote(_root, { challenge: challengeId }, { auth, prisma }, _info) {
-    const userId = getAuthenticatedUserIdOrFail(auth);
+  async upvote(
+    _root,
+    { challenge: challengeId },
+    { authentication, prisma },
+    _info,
+  ) {
+    const userId = getAuthenticatedUserIdOrFail(authentication);
 
     const challenge = await prisma.challenge.findUnique({
       where: { id: challengeId },
@@ -40,10 +45,10 @@ export const vote: IResolvers['Mutation'] & MutationResolvers = {
   async downvote(
     _root,
     { challenge: challengeId, reason },
-    { auth, prisma },
+    { authentication, prisma },
     _info,
   ) {
-    const userId = getAuthenticatedUserIdOrFail(auth);
+    const userId = getAuthenticatedUserIdOrFail(authentication);
 
     const challenge = await prisma.challenge.findUnique({
       where: { id: challengeId },

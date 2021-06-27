@@ -44,7 +44,7 @@ export const solution: IResolvers['Mutation'] & MutationResolvers = {
   async createSolution(
     _root,
     { challenge: challengeId, solutionCode },
-    { auth, prisma, runTest },
+    { authentication, prisma, runTest },
     _info,
   ) {
     testCodeSizeConstraints(solutionCode);
@@ -68,7 +68,7 @@ export const solution: IResolvers['Mutation'] & MutationResolvers = {
       return toGQLSolutionResult('Unexpected error');
     }
 
-    const authorId = getAuthenticatedUserIdOrFail(auth);
+    const authorId = getAuthenticatedUserIdOrFail(authentication);
 
     const size = getCodeSize(solutionCode);
     const timestamp = new Date();

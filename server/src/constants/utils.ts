@@ -1,4 +1,4 @@
-import type { MercuriusAuthContext } from 'mercurius-auth';
+import type { MercuriusContext } from 'mercurius';
 
 const CODE_SIZE_CONSTRAINT = 16384; // 16 KiB
 
@@ -12,8 +12,10 @@ export const testCodeSizeConstraints = (...codes: string[]) => {
   }
 };
 
-export const getAuthenticatedUserIdOrFail = (auth?: MercuriusAuthContext) => {
-  const userId = auth?.userId;
+export const getAuthenticatedUserIdOrFail = (
+  authentication?: MercuriusContext['authentication'],
+) => {
+  const userId = authentication?.userId;
 
   if (!userId) {
     throw new Error('Invalid state: Missing auth.');

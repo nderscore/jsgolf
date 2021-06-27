@@ -2,11 +2,11 @@
   "extends": "../tsconfig",
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist",
+    "outDir": "build",
     "rootDir": "src",
-    "typeRoots": ["./src/types","./node_modules/@types"]
+    "skipLibCheck": true,
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "include": ["src"],
-  "exclude": ["src/types"],
+  "include": ["src", "types"],
   "baseUrl": "."
 }

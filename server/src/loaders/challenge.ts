@@ -63,7 +63,7 @@ export const challenge: MercuriusLoaders = {
       return Promise.all(batch);
     },
 
-    async solutions(queries, { auth, prisma }) {
+    async solutions(queries, { authentication, prisma }) {
       const batch = queries.map(async ({ obj: { id } }) => {
         const results = await prisma.challenge
           .findUnique({
@@ -73,7 +73,7 @@ export const challenge: MercuriusLoaders = {
             orderBy: [{ size: 'desc' }, { timestamp: 'desc' }],
           });
 
-        return results.map(result => toGQLSolution(result, auth));
+        return results.map(result => toGQLSolution(result, authentication));
       });
 
       return Promise.all(batch);

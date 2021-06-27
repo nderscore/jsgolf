@@ -29,12 +29,12 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
   async createChallenge(
     _root,
     { title, description, tags, setupCode, testCode, solutionCode },
-    { auth, prisma },
+    { authentication, prisma },
     _info,
   ) {
     testCodeSizeConstraints(setupCode, testCode, solutionCode);
 
-    const authorId = getAuthenticatedUserIdOrFail(auth);
+    const authorId = getAuthenticatedUserIdOrFail(authentication);
 
     const challenge = await prisma.challenge.create({
       data: {
@@ -63,12 +63,12 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
       testCode,
       solutionCode,
     },
-    { auth, prisma },
+    { authentication, prisma },
     _info,
   ) {
     testCodeSizeConstraints(setupCode, testCode, solutionCode);
 
-    const authorId = getAuthenticatedUserIdOrFail(auth);
+    const authorId = getAuthenticatedUserIdOrFail(authentication);
 
     const existingChallenge = await prisma.challenge.findUnique({
       where: {
@@ -103,10 +103,10 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
   async proposeChallenge(
     _root,
     { id: challengeId },
-    { auth, prisma, runTest },
+    { authentication, prisma, runTest },
     _info,
   ) {
-    const authorId = getAuthenticatedUserIdOrFail(auth);
+    const authorId = getAuthenticatedUserIdOrFail(authentication);
 
     const challenge = await prisma.challenge.findUnique({
       where: {
@@ -151,10 +151,10 @@ export const challenge: IResolvers['Mutation'] & MutationResolvers = {
   async deleteOwnChallenge(
     _root,
     { id: challengeId },
-    { auth, prisma },
+    { authentication, prisma },
     _info,
   ) {
-    const authorId = getAuthenticatedUserIdOrFail(auth);
+    const authorId = getAuthenticatedUserIdOrFail(authentication);
 
     const challenge = await prisma.challenge.findUnique({
       where: {

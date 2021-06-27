@@ -2,6 +2,8 @@ import type { IResolvers } from 'mercurius';
 import type { QueryResolvers } from '../graphql';
 import { toGQLUser } from '../serializers/user';
 
+import { getAuthenticatedUserIdOrFail } from '../constants/utils';
+
 export const user: IResolvers['Query'] & QueryResolvers = {
   async getUser(_root, { id }, { prisma }, _info) {
     const result = await prisma.user.findUnique({
@@ -15,13 +17,11 @@ export const user: IResolvers['Query'] & QueryResolvers = {
     return toGQLUser(result);
   },
 
-  async getOwnUser(_root, _args, { auth, prisma }, _info) {
-    if (!auth) {
-      throw new Error('Not logged in.');
-    }
+  async getOwnUser(_root, _args, { authentication, prisma }, _info) {
+    const userId = getAuthenticatedUserIdOrFail(authentication);
 
     const result = await prisma.user.findUnique({
-      where: { id: auth.userId },
+      where: { id: userId },
     });
 
     if (!result || result.disabled) {

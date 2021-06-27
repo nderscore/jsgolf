@@ -1,6 +1,6 @@
 import type { Session } from '@mgcrea/fastify-session';
 import { FastifyReply, FastifyRequest, FastifyInstance } from 'fastify';
-import mercurius from 'mercurius';
+import mercurius, { MercuriusContext } from 'mercurius';
 import mercuriusAuth from 'mercurius-auth';
 import mercuriusCodegen, { loadSchemaFiles } from 'mercurius-codegen';
 import { buildSchema } from 'graphql';
@@ -17,10 +17,15 @@ import { runTest } from '../lib/testRunnerClient';
 import { PrismaRateLimitStore } from '../lib/PrismaRateLimitStore';
 import { addRateLimitDirectiveToSchema } from '../lib/addRateLimitDirectiveToSchema';
 
+export type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+
 const BASE_PATH = path.resolve(__dirname, '../graphql');
 
-const buildContext = async (request: FastifyRequest, _reply: FastifyReply) => {
-  let auth;
+export const buildContext = async (
+  request: FastifyRequest,
+  _reply: FastifyReply,
+) => {
+  let authentication;
   const session = request?.session as Session;
   const userId = String(session?.get?.('userId') ?? '');
 
@@ -30,7 +35,7 @@ const buildContext = async (request: FastifyRequest, _reply: FastifyReply) => {
     });
 
     if (user && !user.disabled) {
-      auth = {
+      authentication = {
         userId,
         roles: user.roles,
       };
@@ -38,19 +43,16 @@ const buildContext = async (request: FastifyRequest, _reply: FastifyReply) => {
   }
 
   return {
-    auth,
+    authentication,
     prisma,
     runTest,
   };
 };
 
-type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
-type PromiseType<T> = T extends PromiseLike<infer U> ? U : T;
-
 declare module 'mercurius' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface MercuriusContext
-    extends PromiseType<ReturnType<typeof buildContext>> {}
+    extends UnwrapPromise<ReturnType<typeof buildContext>> {}
 }
 
 export const setupGraphQL = (app: FastifyInstance) => {
@@ -87,10 +89,8 @@ export const setupGraphQL = (app: FastifyInstance) => {
     schemaTransforms: [
       addRateLimitDirectiveToSchema(
         getGraphQLRateLimiter({
-          identifyContext: (
-            ctx: UnwrapPromise<ReturnType<typeof buildContext>>,
-          ) => {
-            return ctx.auth?.userId ?? '';
+          identifyContext: (ctx: MercuriusContext) => {
+            return ctx.authentication?.userId ?? '';
           },
           store: new PrismaRateLimitStore({ prisma }),
           formatError: ({ fieldName }) =>
@@ -101,12 +101,18 @@ export const setupGraphQL = (app: FastifyInstance) => {
   });
 
   app.register(mercuriusAuth, {
-    async applyPolicy(authDirective, _parent, _args, { auth }, _info) {
+    async applyPolicy(
+      authDirective,
+      _parent,
+      _args,
+      { authentication },
+      _info,
+    ) {
       const role =
         (authDirective.arguments?.[0]?.value as { value: string })?.value ??
         'USER';
 
-      const roles = auth ? ['USER', ...auth.roles] : [];
+      const roles = authentication ? ['USER', ...authentication.roles] : [];
 
       return roles.includes(role);
     },
