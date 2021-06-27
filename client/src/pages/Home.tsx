@@ -5,7 +5,7 @@ import { Box } from '~/components/Box';
 import { Flex } from '~/components/Flex';
 import { Image } from '~/components/Image';
 
-import { getChallengesDocument } from '@jsgolf/server/src/graphql';
+import { getChallengesDocument } from '~/constants/graphql';
 
 const Home: FC = () => {
   const [{ data }] = useQuery({ query: getChallengesDocument });
