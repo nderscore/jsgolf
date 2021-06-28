@@ -169,8 +169,8 @@ const stitches = createCss({
   },
   prefix: 'jsgolf',
   media: {
-    xs: '(max-width: 519px)',
-    sm: '(min-width: 520px)',
+    xs: '(max-width: 419px)',
+    sm: '(min-width: 420px)',
     md: '(min-width: 900px)',
     lg: '(min-width: 1200px)',
     xl: '(min-width: 1800px)',
@@ -189,8 +189,8 @@ const stitches = createCss({
       ) => ({
         paddingTop: value,
         paddingBottom: value,
-        paddingLeft: value,
-        paddingRight: value,
+        paddingInlineStart: value,
+        paddingInlineEnd: value,
       }),
     pt:
       config =>
@@ -208,7 +208,7 @@ const stitches = createCss({
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
-        paddingRight: value,
+        paddingInlineEnd: value,
       }),
     pb:
       config =>
@@ -226,7 +226,7 @@ const stitches = createCss({
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
-        paddingLeft: value,
+        paddingInlineStart: value,
       }),
     px:
       config =>
@@ -235,8 +235,8 @@ const stitches = createCss({
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
-        paddingLeft: value,
-        paddingRight: value,
+        paddingInlineStart: value,
+        paddingInlineEnd: value,
       }),
     py:
       config =>
@@ -258,8 +258,8 @@ const stitches = createCss({
       ) => ({
         marginTop: value,
         marginBottom: value,
-        marginLeft: value,
-        marginRight: value,
+        marginInlineStart: value,
+        marginInlineEnd: value,
       }),
     mt:
       config =>
@@ -279,7 +279,7 @@ const stitches = createCss({
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
-        marginRight: value,
+        marginInlineEnd: value,
       }),
     mb:
       config =>
@@ -299,7 +299,7 @@ const stitches = createCss({
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
-        marginLeft: value,
+        marginInlineStart: value,
       }),
     mx:
       config =>
@@ -309,8 +309,8 @@ const stitches = createCss({
           | `$${keyof typeof config['theme']['space']}`
           | (string & Record<string, unknown>),
       ) => ({
-        marginLeft: value,
-        marginRight: value,
+        marginInlineStart: value,
+        marginInlineEnd: value,
       }),
     my:
       config =>
