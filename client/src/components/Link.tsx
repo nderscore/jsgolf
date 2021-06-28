@@ -1,5 +1,5 @@
 import React, { forwardRef, ComponentProps } from 'react';
-import { styled, CSS, StitchesVariants } from '~/css';
+import { styled } from '~/css';
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
