@@ -3,10 +3,9 @@ import React, { FC } from 'react';
 import { useUser, AuthenticationStatus } from '~/contexts/User';
 import { paths } from '~/router/paths';
 import { Box } from '~/components/Box';
-import { Image } from '~/components/Image';
 import { Link } from '~/components/Link';
 import * as Dropdown from '~/components/Dropdown';
-import { getGitHubAvatar } from '~/utils/getGitHubAvatar';
+import { Avatar } from '~/components/Avatar';
 
 export const UserNavigation: FC = () => {
   const user = useUser();
@@ -18,16 +17,9 @@ export const UserNavigation: FC = () => {
     <Box css={{ flexShrink: 0 }}>
       {isAuthenticated && (
         <Dropdown.Root>
-          <Dropdown.Trigger aria-label="User Menu">
-            <Image
-              src={getGitHubAvatar(user.githubId)}
-              alt={`Avatar, ${user.name}`}
-              css={{
-                height: '$5',
-                width: '$5',
-              }}
-            />
-          </Dropdown.Trigger>
+          <Dropdown.ImageTrigger aria-label="User Menu">
+            <Avatar user={user} />
+          </Dropdown.ImageTrigger>
           <Dropdown.Content sideOffset={8}>
             <Dropdown.LinkItem>
               <Link to={paths.profile} params={{ id: user.id }}>
@@ -35,7 +27,7 @@ export const UserNavigation: FC = () => {
               </Link>
             </Dropdown.LinkItem>
             <Dropdown.LinkItem>
-              <Link to={paths.sandbox}>My Sandbox</Link>
+              <Link to={paths.sandbox}>Sandbox</Link>
             </Dropdown.LinkItem>
             <Dropdown.Separator />
             <Dropdown.LinkItem>

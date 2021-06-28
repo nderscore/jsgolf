@@ -2,6 +2,7 @@ import React, { forwardRef, ComponentProps } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import { styled } from '~/css';
+import { Image } from '~/components/Image';
 import { StyledLink } from '~/components/Link';
 
 export const Content = styled(DropdownMenu.Content, {
@@ -90,12 +91,27 @@ export const Separator = styled(DropdownMenu.Separator, {
   margin: '$1',
 });
 
-export const Trigger = styled(DropdownMenu.Trigger, {
+export const ImageTrigger = styled(DropdownMenu.Trigger, {
   cursor: 'pointer',
   appearance: 'none',
+  backgroundColor: 'transparent',
   border: 'none',
   margin: '$0',
   padding: '$0',
+
+  '&:focus': {
+    outline: 'none',
+  },
+
+  [`&:focus > ${Image}`]: {
+    boxShadow: '0px 0px 0px 2px $colors$borderPrimary',
+  },
+
+  '@hover': {
+    [`&:hover > ${Image}`]: {
+      boxShadow: '0px 0px 0px 2px $colors$borderPrimary',
+    },
+  },
 });
 
 export const Root = DropdownMenu.Root;
