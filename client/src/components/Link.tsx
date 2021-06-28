@@ -6,7 +6,7 @@ import {
   generatePath,
 } from 'react-router-dom';
 
-const StyledLink = styled('a', {
+export const StyledLink = styled('a', {
   textDecoration: 'none',
   '@hover': {
     '&:hover': {

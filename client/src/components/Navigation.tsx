@@ -5,6 +5,7 @@ import { paths } from '~/router/paths';
 import { Flex } from '~/components/Flex';
 import { Image } from '~/components/Image';
 import { Link } from '~/components/Link';
+import * as Dropdown from '~/components/Dropdown';
 import { getGitHubAvatar } from '~/utils/getGitHubAvatar';
 
 export const Navigation: FC = () => {
@@ -22,24 +23,35 @@ export const Navigation: FC = () => {
         Proposals
       </Link>
       {isAuthenticated && (
-        <>
-          <Link color="contrast" to={paths.sandbox}>
-            Sandbox
-          </Link>
-          <Link color="contrast" external to={paths.logout}>
-            Log out
-          </Link>
-          <Link color="contrast" to={paths.profile} params={{ id: user.id }}>
+        <Dropdown.Root>
+          <Dropdown.Trigger>
             <Image
               src={getGitHubAvatar(user.githubId)}
-              alt={user.name}
+              alt={`User menu, ${user.name}`}
               css={{
                 height: '$5',
                 width: '$5',
               }}
             />
-          </Link>
-        </>
+          </Dropdown.Trigger>
+          <Dropdown.Content>
+            <Dropdown.LinkItem>
+              <Link to={paths.profile} params={{ id: user.id }}>
+                My Profile
+              </Link>
+            </Dropdown.LinkItem>
+            <Dropdown.LinkItem>
+              <Link to={paths.sandbox}>Sandbox</Link>
+            </Dropdown.LinkItem>
+            <Dropdown.Separator />
+            <Dropdown.LinkItem>
+              <Link external to={paths.logout}>
+                Log out
+              </Link>
+            </Dropdown.LinkItem>
+            <Dropdown.Arrow />
+          </Dropdown.Content>
+        </Dropdown.Root>
       )}
       {isUnauthenticated && (
         <Link color="contrast" external to={paths.login}>
