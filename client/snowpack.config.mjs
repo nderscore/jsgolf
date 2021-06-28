@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const apiProxy = require('./apiProxy.js');
+import { apiProxy } from './apiProxy.mjs';
 
 /** @type {import("snowpack").SnowpackUserConfig } */
-module.exports = {
+export default {
   devOptions: {
     open: 'none',
     port: 3000,
