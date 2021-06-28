@@ -1,4 +1,4 @@
-import React, { forwardRef, ComponentProps, MouseEvent } from 'react';
+import React, { forwardRef, ComponentProps } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import { styled } from '~/css';
