@@ -15,4 +15,10 @@ extend type Query {
   Get list of proposed challenges
   """
   getProposedChallenges: [Challenge!]!
+
+  """
+  Get the currently authenticated user's draft challenges
+  """
+  getOwnDraftChallenges: [Challenge!]!
+    @auth(role: CREATOR)
 }

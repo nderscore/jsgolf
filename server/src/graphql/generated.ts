@@ -44,6 +44,8 @@ export type Query = {
   getChallenges: Array<Challenge>;
   /** Get list of proposed challenges */
   getProposedChallenges: Array<Challenge>;
+  /** Get the currently authenticated user's draft challenges */
+  getOwnDraftChallenges: Array<Challenge>;
   /** Get a user profile by ID */
   getUser?: Maybe<User>;
   /** Get the currently authenticated user's profile */
@@ -84,6 +86,11 @@ export type Mutation = {
   createSolution: CreateSolutionResult;
   /** Executes a dry run of a solution */
   testSolution: Result;
+  /**
+   * Grants creator role to the currently authenticated user
+   * (after solving a simple challenge)
+   */
+  becomeCreator: Scalars['Boolean'];
   /** Upvote a proposed Challenge */
   upvote: Scalars['Boolean'];
   /** Downvote a proposed Challenge with reason */
@@ -140,6 +147,10 @@ export type MutationcreateSolutionArgs = {
 export type MutationtestSolutionArgs = {
   challenge: Scalars['ID'];
   solutionCode: Scalars['String'];
+};
+
+export type MutationbecomeCreatorArgs = {
+  answerCode: Scalars['String'];
 };
 
 export type MutationupvoteArgs = {
@@ -433,6 +444,11 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  getOwnDraftChallenges?: Resolver<
+    Array<ResolversTypes['Challenge']>,
+    ParentType,
+    ContextType
+  >;
   getUser?: Resolver<
     Maybe<ResolversTypes['User']>,
     ParentType,
@@ -514,6 +530,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationtestSolutionArgs, 'challenge' | 'solutionCode'>
+  >;
+  becomeCreator?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationbecomeCreatorArgs, 'answerCode'>
   >;
   upvote?: Resolver<
     ResolversTypes['Boolean'],
@@ -960,6 +982,16 @@ export type getChallengeQuery = { __typename?: 'Query' } & {
           >
         >;
       }
+  >;
+};
+
+export type getOwnDraftChallengesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type getOwnDraftChallengesQuery = { __typename?: 'Query' } & {
+  getOwnDraftChallenges: Array<
+    { __typename?: 'Challenge' } & Pick<Challenge, 'id' | 'title' | 'updated'>
   >;
 };
 
@@ -2145,6 +2177,36 @@ export const getChallengeDocument = {
     },
   ],
 } as unknown as DocumentNode<getChallengeQuery, getChallengeQueryVariables>;
+export const getOwnDraftChallengesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getOwnDraftChallenges' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getOwnDraftChallenges' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'updated' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  getOwnDraftChallengesQuery,
+  getOwnDraftChallengesQueryVariables
+>;
 export const getOwnUserDocument = {
   kind: 'Document',
   definitions: [

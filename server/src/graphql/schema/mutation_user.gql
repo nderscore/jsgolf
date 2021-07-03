@@ -1,0 +1,9 @@
+extend type Mutation {
+  """
+  Grants creator role to the currently authenticated user
+  (after solving a simple challenge)
+  """
+  becomeCreator(
+    answerCode: String!
+  ): Boolean!
+}

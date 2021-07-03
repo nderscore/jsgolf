@@ -44,3 +44,11 @@ query getChallenge(
     }
   }
 }
+
+query getOwnDraftChallenges {
+  getOwnDraftChallenges {
+    id
+    title
+    updated
+  }
+}
