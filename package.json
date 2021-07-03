@@ -13,6 +13,7 @@
     "client": "yarn workspace @jsgolf/client",
     "server": "yarn workspace @jsgolf/server",
     "testrunner": "yarn workspace @jsgolf/testrunner",
+    "build": "yarn build:testrunner && yarn build:server && yarn build:client",
     "build:client": "yarn client build",
     "build:server": "yarn server build",
     "build:testrunner": "yarn testunner build",
