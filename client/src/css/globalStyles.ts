@@ -10,8 +10,8 @@ export const globalStyles = globalCss({
     height: '100%',
     fontFamily: '$body',
     fontSize: '$3',
-    backgroundColor: '$bgBase',
-    color: '$textBase',
+    backgroundColor: '$bgPrimary',
+    color: '$textPrimary',
   },
   '#root': {
     height: '100%',
