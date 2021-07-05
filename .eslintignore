@@ -2,4 +2,5 @@ build/
 dist/
 node_modules/
 generated.ts
+cosmos.userdeps.js
 !.lintstagedrc.js

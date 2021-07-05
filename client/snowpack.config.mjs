@@ -23,13 +23,17 @@ export default {
     public: { static: true, url: '/' },
     src: { url: '/' },
   },
+  packageOptions: {
+    polyfillNode: true,
+  },
   plugins: [
     ['@snowpack/plugin-react-refresh'],
     ['@snowpack/plugin-dotenv'],
     ['@snowpack/plugin-typescript'],
   ],
   routes: [
-    { dest: apiProxy, src: '/(graphql|login|logout|altair).*' },
-    { dest: '/index.html', match: 'routes', src: '.*' },
+    { src: '/(graphql|login|logout|altair).*', dest: apiProxy },
+    { src: '/_cosmos-renderer.html', dest: '/index.cosmos.html' },
+    { src: '.*', dest: '/index.html', match: 'routes' },
   ],
 };

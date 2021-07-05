@@ -1,0 +1,6 @@
+{
+  "rootDir": "./src",
+  "staticPath": "../public",
+  "userDepsFilePath": "cosmos.userdeps.js",
+  "experimentalRendererUrl": "http://localhost:3000/_cosmos-renderer.html"
+}

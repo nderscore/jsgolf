@@ -16,10 +16,10 @@
     "build": "yarn build:testrunner && yarn build:server && yarn build:client",
     "build:client": "yarn client build",
     "build:server": "yarn server build",
-    "build:testrunner": "yarn testunner build",
+    "build:testrunner": "yarn testrunner build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "postinstall": "husky install"
+    "postinstall": "husky install && patch-package"
   },
   "resolutions": {
     "**/graphql": "^15.5.1"
@@ -32,6 +32,8 @@
     "eslint-plugin-prettier": "^3.4.0",
     "husky": "^7.0.0",
     "lint-staged": "^11.0.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.3.2"
   }
 }

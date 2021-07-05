@@ -1,3 +1,10 @@
+- [Requiremenets](#requirements)
+- [Developer Setup](#developer-setup)
+- [Dev Tools](#dev-tools)
+- [Global Scripts](#global-scripts)
+
+---
+
 ## Requirements
 
 - Node 14.x+ (or nvm)
@@ -44,19 +51,39 @@
 
 ## Dev Tools
 
-- Altair GraphQL playground: `http://localhost:3000/altair`
+### Altair GraphQL playground
 
-- Prisma Studio (ORM / Database Admin)
+GraphQL client IDE
+
+- While client + backend dev servers are running, visit: `http://localhost:3000/altair`
+
+### Prisma Studio
+
+ORM Database Admininistration
+
+- Run:
 
   ```shell
   yarn server prisma studio
   ```
 
-## Scripts
+- Then visit `http://localhost:5555`
 
-### Global
+### React Cosmos
 
-- Run eslint/prettier across all projects:
+Develop UI components in isolation
+
+- While the client dev server is running:
+
+  ```shell
+  yarn client cosmos
+  ```
+
+- Then visit `http://localhost:5000`
+
+## Global Scripts
+
+- Run eslint/prettier across all workspaces:
 
   ```shell
   yarn lint
@@ -64,13 +91,11 @@
   yarn lint:fix
   ```
 
-- Build all projects:
+- Build all workspaces:
 
   ```shell
   yarn build
   ```
-
-### Workspace
 
 - Use `yarn (testrunner|server|client) [command]` to execute yarn commands in a workspace:
 
