@@ -19,6 +19,7 @@ const liveCode = `
 <Flex
   direction={{ '@initial': 'column', '@sm': 'row' }}
   gap="1"
+  css={{ justifyContent: 'space-between' }}
 >
   <Child />
   <Child />
