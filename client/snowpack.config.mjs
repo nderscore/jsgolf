@@ -1,5 +1,7 @@
 import { apiProxy } from './apiProxy.mjs';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
   devOptions: {
@@ -23,6 +25,15 @@ export default {
     public: { static: true, url: '/' },
     src: { url: '/' },
   },
+  exclude: isDev
+    ? ['**/node_modules/**/*']
+    : [
+        '**/node_modules/**/*',
+        '**/__fixtures__/**/*',
+        '**/*.fixture.*',
+        '**/cosmos.*',
+        '**/*.cosmos.*',
+      ],
   packageOptions: {
     polyfillNode: true,
   },
