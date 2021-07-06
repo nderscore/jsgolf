@@ -15,6 +15,8 @@ const Child: FC<ComponentProps<typeof Box>> = props => {
   return <Box css={combinedCSS}>Child</Box>;
 };
 
+const liveScope = { Flex, Child, Box };
+
 const liveCode = `
 <Flex
   direction={{ '@initial': 'column', '@sm': 'row' }}
@@ -27,8 +29,6 @@ const liveCode = `
   <Child />
 </Flex>
 `;
-
-const liveScope = { Flex, Child };
 
 const makeChildren = (length: number) =>
   Array.from({ length }, (_, index) => <Child key={index} />);
