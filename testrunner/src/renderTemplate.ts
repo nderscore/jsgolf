@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-type token = 'TEST' | 'SOLUTION';
+type token = 'SETUP' | 'TEST' | 'SOLUTION';
 
 const template = fs.readFileSync(
   path.resolve(__dirname, './template.js'),
