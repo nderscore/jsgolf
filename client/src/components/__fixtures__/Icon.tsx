@@ -3,7 +3,7 @@ import { useSelect } from 'react-cosmos/fixture';
 
 import { Icon, IconNames } from '~/components/Icon';
 
-const icons: IconNames[] = [
+export const icons: IconNames[] = [
   'activity',
   'airplay',
   'alert-circle',

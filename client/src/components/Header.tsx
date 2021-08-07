@@ -21,7 +21,7 @@ export const Header: FC = () => {
         boxShadow: '0 2px 0 0 $colors$borderContrast',
       }}
     >
-      <Container css={{ padding: '$2', '@xs': { padding: '$1 $2' } }}>
+      <Container css={{ padding: '$3', '@xs': { padding: '$2 $3' } }}>
         <Flex
           as="nav"
           gap={{ '@initial': '2', '@xs': '1' }}

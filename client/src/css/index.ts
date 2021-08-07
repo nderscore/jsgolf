@@ -99,19 +99,29 @@ const stitches = createCss({
       black: '#000000',
       white: '#ffffff',
 
-      // add base theme pallete (FIXME)
       bgPrimary: '$white',
       bgSecondary: '$manatee1100',
       bgTertiary: '$manatee1000',
       bgContrast: '$manatee100',
 
       textPrimary: '$manatee000',
+      testPrimaryTint: '$manatee100',
       textContrast: '$manatee1100',
 
       textLinkPrimary: '$indigo400',
       textLinkPrimaryHover: '$indigo500',
       textLinkContrast: '$indigo1000',
       textLinkContrastHover: '$indigo1100',
+
+      action: '$indigo500',
+      actionTint: '$indigo400',
+      actionShade: '$indigo600',
+
+      danger: '$brownred500',
+      dangerTint: '$brownred400',
+      dangerShade: '$brownred600',
+
+      disabled: '$manatee800',
 
       borderPrimary: '$manatee1000',
       borderSecondary: '$manatee900',
@@ -125,21 +135,21 @@ const stitches = createCss({
     sizes: {
       0: '0',
       1: '12px',
-      2: '16px',
-      3: '24px',
-      4: '32px',
-      5: '48px',
-      6: '64px',
-      7: '96px',
-      8: '128px',
-      9: '192px',
+      2: '14px',
+      3: '16px',
+      4: '24px',
+      5: '32px',
+      6: '48px',
+      7: '64px',
+      8: '96px',
+      9: '128px',
     },
     space: {
       0: '0',
-      1: '8px',
-      2: '16px',
-      3: '32px',
-      4: '48px',
+      1: '4px',
+      2: '8px',
+      3: '16px',
+      4: '32px',
     },
     fontSizes: {
       1: '12px',

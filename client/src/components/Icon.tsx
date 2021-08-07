@@ -306,12 +306,12 @@ export const StyledSvg = styled('svg', {
   variants: {
     size: {
       small: {
+        $$svgSize: '$sizes$1',
+      },
+      normal: {
         $$svgSize: '$sizes$2',
       },
       large: {
-        $$svgSize: '$sizes$4',
-      },
-      normal: {
         $$svgSize: '$sizes$3',
       },
     },

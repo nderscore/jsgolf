@@ -13,7 +13,7 @@ export const Footer: FC = () => {
         boxShadow: '0 -1px 0 0 $colors$borderPrimary',
       }}
     >
-      <Container css={{ padding: '$1' }}>
+      <Container css={{ padding: '$2' }}>
         <Flex css={{ justifyContent: 'center' }}>
           © 2021 js.golf, _nderscore
         </Flex>
