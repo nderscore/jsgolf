@@ -10,37 +10,19 @@ const StyledAvatar = styled(Image, {
   height: '$$avatarSize',
 
   defaultVariants: {
-    size: '5',
+    size: 'normal',
   },
 
   variants: {
     size: {
-      1: {
-        $$avatarSize: '$sizes$1',
+      small: {
+        $$svgSize: '$sizes$2',
       },
-      2: {
-        $$avatarSize: '$sizes$2',
+      large: {
+        $$svgSize: '$sizes$7',
       },
-      3: {
-        $$avatarSize: '$sizes$3',
-      },
-      4: {
-        $$avatarSize: '$sizes$4',
-      },
-      5: {
-        $$avatarSize: '$sizes$5',
-      },
-      6: {
-        $$avatarSize: '$sizes$6',
-      },
-      7: {
-        $$avatarSize: '$sizes$7',
-      },
-      8: {
-        $$avatarSize: '$sizes$8',
-      },
-      9: {
-        $$avatarSize: '$sizes$9',
+      normal: {
+        $$svgSize: '$sizes$4',
       },
     },
   },
