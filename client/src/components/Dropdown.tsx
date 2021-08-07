@@ -53,6 +53,8 @@ const StyledLinkItem = styled(DropdownMenu.Item, {
   },
 });
 
+// FIXME: Remove this when radix supports links as dropdown items
+// or can be replaced with dropdown menu component
 const linkSelectHandler = (e: Event) => {
   const target = (e.target as HTMLElement)?.querySelector?.(
     `:scope > ${StyledLink}`,
