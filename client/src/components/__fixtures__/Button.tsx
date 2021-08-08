@@ -29,10 +29,10 @@ export default {
     const [iconBefore] = useSelect('iconBefore', {
       options: iconOptions,
     });
-    const [iconAfter] = useSelect('iconAter', {
+    const [iconAfter] = useSelect('iconAfter', {
       options: iconOptions,
     });
-    const [iconOnly] = useSelect('iconAter', {
+    const [iconOnly] = useSelect('iconOnly', {
       options: ['no', 'yes'],
     });
     const [disabled] = useSelect('disabled', {
