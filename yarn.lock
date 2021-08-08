@@ -925,6 +925,17 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@radix-ui/react-label@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-label/-/react-label-0.0.15.tgz#ab70d7cd93d6ebaf2e1007cca70e9b1858bcb932"
+  integrity sha512-p1nM6z2rLkstfHVsqSxcDMn0eAGXkx/G5e4XIGmOCxYa/7EkOQ+lBz0+/7sk+Ut+8B37h7d0bfxnzr3ILVxJUw==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/react-compose-refs" "0.0.5"
+    "@radix-ui/react-id" "0.0.6"
+    "@radix-ui/react-polymorphic" "0.0.13"
+    "@radix-ui/react-primitive" "0.0.15"
+
 "@radix-ui/react-menu@0.0.22":
   version "0.0.22"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-menu/-/react-menu-0.0.22.tgz#5414b9be618a6f82bfeea80bac522854cfdd94f3"

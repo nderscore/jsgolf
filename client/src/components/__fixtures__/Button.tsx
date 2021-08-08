@@ -32,6 +32,9 @@ export default {
     const [iconAfter] = useSelect('iconAter', {
       options: iconOptions,
     });
+    const [iconOnly] = useSelect('iconAter', {
+      options: ['no', 'yes'],
+    });
     const [disabled] = useSelect('disabled', {
       options: ['no', 'yes'],
     });
@@ -45,6 +48,7 @@ export default {
         size={size}
         iconBefore={renderIcon(iconBefore)}
         iconAfter={renderIcon(iconAfter)}
+        iconOnly={iconOnly === 'yes'}
       />
     );
   },

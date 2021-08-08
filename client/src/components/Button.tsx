@@ -147,19 +147,21 @@ export const StyledButton = styled('button', {
 export type ButtonProps = ComponentProps<typeof StyledButton> & {
   iconAfter?: ReactElement<typeof Icon>;
   iconBefore?: ReactElement<typeof Icon>;
+  iconOnly?: boolean;
   label: string;
 };
 
 export const Button: FC<ButtonProps> = ({
   iconAfter,
   iconBefore,
+  iconOnly = false,
   label,
   ...restProps
 }) => {
   return (
     <StyledButton aria-label={label} {...restProps}>
       {iconBefore}
-      {label ? <Text>{label}</Text> : null}
+      {iconOnly ? null : <Text>{label}</Text>}
       {iconAfter}
     </StyledButton>
   );

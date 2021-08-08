@@ -10,6 +10,7 @@ export const globalStyles = globalCss({
     height: '100%',
     fontFamily: '$body',
     fontSize: '$3',
+    lineHeight: '$normal',
     backgroundColor: '$bgPrimary',
     color: '$textPrimary',
   },

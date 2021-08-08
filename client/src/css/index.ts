@@ -105,7 +105,7 @@ const stitches = createCss({
       bgContrast: '$manatee100',
 
       textPrimary: '$manatee000',
-      testPrimaryTint: '$manatee100',
+      testPrimaryTint: '$manatee200',
       textContrast: '$manatee1100',
 
       textLinkPrimary: '$indigo400',
@@ -160,6 +160,10 @@ const stitches = createCss({
       8: '36px',
       9: '48px',
     },
+    lineHeights: {
+      thin: 1,
+      normal: 1.2,
+    },
     radii: {
       1: '3px',
       2: '5px',
@@ -173,6 +177,16 @@ const stitches = createCss({
       3: '300',
       4: '400',
       max: '999',
+    },
+    transitions: {
+      long: '600ms linear',
+      longIn: '600ms ease-in',
+      longInOut: '600ms ease-in-out',
+      longOut: '600ms ease-out',
+      short: '300ms linear',
+      shortIn: '300ms ease-in',
+      shortInOut: '300ms ease-in-out',
+      shortOut: '300ms ease-out',
     },
   },
   prefix: 'jsgolf',
