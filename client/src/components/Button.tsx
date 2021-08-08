@@ -18,7 +18,6 @@ export const StyledButton = styled('button', {
   display: 'inline-flex',
   justifyContent: 'center',
   border: 'none',
-  lineHeight: 1,
 
   [_disabled]: {
     backgroundColor: '$disabled',
@@ -95,6 +94,7 @@ export const StyledButton = styled('button', {
         } as any, // FIXME: stitches type errors
         borderRadius: '$1',
         fontSize: '$1',
+        lineHeight: 1,
         px: '$2',
         py: '$1',
       },
@@ -102,6 +102,7 @@ export const StyledButton = styled('button', {
         $$iconMargin: '$space$2',
         borderRadius: '$2',
         fontSize: '$2',
+        lineHeight: '$sizes$2',
         px: '$3',
         py: '$2',
       },
@@ -112,7 +113,9 @@ export const StyledButton = styled('button', {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any, // FIXME: stitches type errors
         borderRadius: '$2',
-        fontSize: '$3',
+        fontSize: '$4',
+        lineHeight: '$sizes$3',
+        fontWeight: 'bold',
         px: '$4',
         py: '$3',
       },

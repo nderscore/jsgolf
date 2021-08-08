@@ -16,10 +16,10 @@ const StyledAvatar = styled(Image, {
   variants: {
     size: {
       small: {
-        $$avatarSize: '$sizes$3',
+        $$avatarSize: '$sizes$2',
       },
       normal: {
-        $$avatarSize: '$sizes$5',
+        $$avatarSize: '$sizes$4',
       },
       large: {
         $$avatarSize: '$sizes$7',

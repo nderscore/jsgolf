@@ -44,8 +44,8 @@ export const Header: FC = () => {
                 alt="js.golf"
                 css={{
                   mr: '$2',
-                  height: '$5',
-                  width: '$5',
+                  height: '$4',
+                  width: '$4',
                   '@xs': {
                     mr: '$1',
                   },
