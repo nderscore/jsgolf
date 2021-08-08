@@ -8,12 +8,12 @@ export const ButtonGroup = styled('div', {
 
   [`& ${StyledButton}`]: {
     '&:not(:first-child)': {
-      borderBottomLeftRadius: '0',
-      borderTopLeftRadius: '0',
+      borderStartStartRadius: '0',
+      borderEndStartRadius: '0',
     },
     '&:not(:last-child)': {
-      borderBottomRightRadius: '0',
-      borderTopRightRadius: '0',
+      borderEndEndRadius: '0',
+      borderStartEndRadius: '0',
     },
   },
 });
