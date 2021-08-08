@@ -6,6 +6,7 @@ import { Input } from '~/components/Input';
 export default {
   Basic() {
     const [label] = useValue('label', { defaultValue: 'Label' });
+    const [placeholder] = useValue('placeholder', { defaultValue: '' });
     const [size] = useSelect('size', {
       options: ['small', 'normal'],
       defaultValue: 'normal',
@@ -22,6 +23,7 @@ export default {
         name="demo-input"
         disabled={disabled === 'yes'}
         label={label}
+        placeholder={placeholder || undefined}
         inputSize={size}
         type={type}
       />
@@ -30,6 +32,7 @@ export default {
 
   Password() {
     const [label] = useValue('label', { defaultValue: 'Label' });
+    const [placeholder] = useValue('placeholder', { defaultValue: '' });
     const [size] = useSelect('size', {
       options: ['small', 'normal'],
       defaultValue: 'normal',
@@ -43,6 +46,7 @@ export default {
         name="password-input"
         disabled={disabled === 'yes'}
         label={label}
+        placeholder={placeholder || undefined}
         inputSize={size}
         type="password"
       />
