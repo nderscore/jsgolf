@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 
-import { styled, StitchesVariants } from '~/css';
+import { styled, VariantProps } from '~/css';
 import { Button, StyledButton } from '~/components/Button';
 import { Label } from '~/components/Label';
 import { Icon, StyledSvg as StyledIcon } from '~/components/Icon';
@@ -79,7 +79,7 @@ export const Wrapper = styled('div', {
   },
 });
 
-type WrapperVariants = StitchesVariants<typeof Wrapper>;
+type WrapperVariants = VariantProps<typeof Wrapper>;
 
 type InputType = 'text' | 'password';
 

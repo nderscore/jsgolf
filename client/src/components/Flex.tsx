@@ -1,8 +1,8 @@
 import type { ComponentPropsWithRef } from 'react';
 
-import { CSS, StitchesVariants, styled } from '~/css';
+import { CSS, VariantProps, styled } from '~/css';
 
-export type FlexVariants = StitchesVariants<typeof Flex>;
+export type FlexVariants = VariantProps<typeof Flex>;
 
 export type FlexProps = ComponentPropsWithRef<'div'> &
   FlexVariants & {

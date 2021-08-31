@@ -1,8 +1,13 @@
-import { createCss, StitchesCss } from '@stitches/react';
+import {
+  createStitches,
+  CSS as StitchesCSS,
+  PropertyValue,
+  ScaleValue,
+} from '@stitches/react';
 
-export type { StitchesVariants } from '@stitches/react';
+export type { VariantProps } from '@stitches/react';
 
-const stitches = createCss({
+const stitches = createStitches({
   theme: {
     colors: {
       blueviolet000: '#171e3c',
@@ -202,160 +207,64 @@ const stitches = createCss({
     noHover: '(any-hover: none)',
   },
   utils: {
-    p:
-      config =>
-      (
-        value:
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        paddingTop: value,
-        paddingBottom: value,
-        paddingInlineStart: value,
-        paddingInlineEnd: value,
-      }),
-    pt:
-      config =>
-      (
-        value:
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        paddingTop: value,
-      }),
-    pr:
-      config =>
-      (
-        value:
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        paddingInlineEnd: value,
-      }),
-    pb:
-      config =>
-      (
-        value:
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        paddingBottom: value,
-      }),
-    pl:
-      config =>
-      (
-        value:
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        paddingInlineStart: value,
-      }),
-    px:
-      config =>
-      (
-        value:
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        paddingInlineStart: value,
-        paddingInlineEnd: value,
-      }),
-    py:
-      config =>
-      (
-        value:
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        paddingTop: value,
-        paddingBottom: value,
-      }),
-    m:
-      config =>
-      (
-        value:
-          | 'auto'
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        marginTop: value,
-        marginBottom: value,
-        marginInlineStart: value,
-        marginInlineEnd: value,
-      }),
-    mt:
-      config =>
-      (
-        value:
-          | 'auto'
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        marginTop: value,
-      }),
-    mr:
-      config =>
-      (
-        value:
-          | 'auto'
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        marginInlineEnd: value,
-      }),
-    mb:
-      config =>
-      (
-        value:
-          | 'auto'
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        marginBottom: value,
-      }),
-    ml:
-      config =>
-      (
-        value:
-          | 'auto'
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        marginInlineStart: value,
-      }),
-    mx:
-      config =>
-      (
-        value:
-          | 'auto'
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        marginInlineStart: value,
-        marginInlineEnd: value,
-      }),
-    my:
-      config =>
-      (
-        value:
-          | 'auto'
-          | `$${keyof typeof config['theme']['space']}`
-          | (string & Record<string, unknown>),
-      ) => ({
-        marginTop: value,
-        marginBottom: value,
-      }),
+    p: (value: ScaleValue<'space'> | PropertyValue<'padding'>) => ({
+      padding: value,
+    }),
+    pt: (value: ScaleValue<'space'> | PropertyValue<'paddingTop'>) => ({
+      paddingTop: value,
+    }),
+    pr: (value: ScaleValue<'space'> | PropertyValue<'paddingInlineEnd'>) => ({
+      paddingInlineEnd: value,
+    }),
+    pb: (value: ScaleValue<'space'> | PropertyValue<'paddingBottom'>) => ({
+      paddingBottom: value,
+    }),
+    pl: (value: ScaleValue<'space'> | PropertyValue<'paddingInlineStart'>) => ({
+      paddingInlineStart: value,
+    }),
+    px: (value: ScaleValue<'space'> | PropertyValue<'paddingInlineStart'>) => ({
+      paddingInlineStart: value,
+      paddingInlineEnd: value,
+    }),
+    py: (value: ScaleValue<'space'> | PropertyValue<'paddingTop'>) => ({
+      paddingTop: value,
+      paddingBottom: value,
+    }),
+    m: (value: ScaleValue<'space'> | PropertyValue<'margin'>) => ({
+      margin: value,
+    }),
+    mt: (value: ScaleValue<'space'> | PropertyValue<'marginTop'>) => ({
+      marginTop: value,
+    }),
+    mr: (value: ScaleValue<'space'> | PropertyValue<'marginInlineEnd'>) => ({
+      marginInlineEnd: value,
+    }),
+    mb: (value: ScaleValue<'space'> | PropertyValue<'marginBottom'>) => ({
+      marginBottom: value,
+    }),
+    ml: (value: ScaleValue<'space'> | PropertyValue<'marginInlineStart'>) => ({
+      marginInlineStart: value,
+    }),
+    mx: (value: ScaleValue<'space'> | PropertyValue<'marginInlineStart'>) => ({
+      marginInlineStart: value,
+      marginInlineEnd: value,
+    }),
+    my: (value: ScaleValue<'space'> | PropertyValue<'marginTop'>) => ({
+      marginTop: value,
+      marginBottom: value,
+    }),
   },
 });
 
-export type CSS = StitchesCss<typeof stitches>;
+export type CSS = StitchesCSS<typeof stitches>;
 
 export const {
+  createTheme,
   styled,
   css,
   theme,
-  getCssString,
-  global: globalCss,
+  getCssText,
+  globalCss,
   keyframes,
   config,
 } = stitches;
