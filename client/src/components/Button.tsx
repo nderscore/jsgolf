@@ -90,8 +90,7 @@ export const StyledButton = styled('button', {
         $$iconMargin: '$space$1',
         [_icon]: {
           $$svgSize: '$sizes$1',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any, // FIXME: stitches type errors
+        },
         borderRadius: '$1',
         fontSize: '$1',
         lineHeight: 1,
@@ -110,8 +109,7 @@ export const StyledButton = styled('button', {
         $$iconMargin: '$space$3',
         [_icon]: {
           $$svgSize: '$sizes$3',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any, // FIXME: stitches type errors
+        },
         borderRadius: '$2',
         fontSize: '$4',
         lineHeight: '$sizes$3',
